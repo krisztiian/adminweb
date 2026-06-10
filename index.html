@@ -10,6 +10,10 @@
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
                     colors: {
                         seerpg: {
                             DEFAULT: '#f0c850',
@@ -46,59 +50,60 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&family=JetBrains+Mono:wght=400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;800&family=JetBrains+Mono:wght=400;500;600&display=swap');
+        
         body {
-            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        .mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
+        
         .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
+            width: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(156, 163, 175, 0.2);
-            border-radius: 4px;
+            background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(107, 114, 128, 0.5);
-            border-radius: 4px;
+            background: rgba(148, 163, 184, 0.3);
+            border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgba(239, 68, 68, 0.5);
+            background: rgba(148, 163, 184, 0.6);
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(71, 85, 105, 0.5);
         }
     </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
+<body class="bg-slate-50 dark:bg-[#0B0F19] text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-300">
 
-    <header class="border-b border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-950/50 backdrop-blur sticky top-0 z-50 transition-colors duration-300">
+    <header class="sticky top-0 z-50 bg-white/70 dark:bg-[#0B0F19]/70 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div id="headerLogoContainer" class="p-1.5 bg-seerpg-500/10 border border-seerpg-500/20 rounded-lg flex items-center justify-center shadow-lg transition-all duration-300">
-                    <img id="serverLogo" src="https://forum.see-rpg.com/img/icon_yellow.png" alt="Logo" class="h-8 w-8 object-contain">
+            <div class="flex items-center space-x-4">
+                <div id="headerLogoContainer" class="p-2 bg-seerpg-500/10 rounded-xl flex items-center justify-center transition-all duration-300">
+                    <img id="serverLogo" src="https://forum.see-rpg.com/img/icon_yellow.png" alt="Logo" class="h-6 w-6 object-contain">
                 </div>
                 <div>
-                    <h1 class="text-lg font-bold tracking-wider uppercase text-black dark:text-white" id="mainTitle">SeeRPG <span class="text-seerpg-500">Admin</span></h1>
-                    <p class="text-xs text-gray-500 dark:text-gray-400" id="subTitle">Log Elemző & Statisztika</p>
+                    <h1 class="text-base font-bold tracking-wide text-slate-900 dark:text-white" id="mainTitle">SeeRPG <span class="text-seerpg-500">Admin</span></h1>
                 </div>
             </div>
 
-            <div class="flex bg-gray-100 dark:bg-gray-900/90 p-1 rounded-2xl border border-gray-200 dark:border-gray-800/80 shadow-inner relative transition-colors duration-300">
-                <button onclick="switchMode('seerpg')" id="tab-seerpg" class="px-5 py-2 text-xs font-bold rounded-xl transition-all duration-300 flex items-center space-x-2 bg-seerpg-500 text-gray-950 shadow-sm transform scale-100">
-                    <i class="fa-solid fa-gamepad text-[11px]"></i>
+            <div class="flex bg-slate-100 dark:bg-slate-900/80 p-1 rounded-xl relative transition-colors duration-300">
+                <button onclick="switchMode('seerpg')" id="tab-seerpg" class="px-4 py-1.5 text-xs font-semibold rounded-lg transition-all duration-300 flex items-center space-x-2 bg-seerpg-500 text-slate-900 shadow-sm">
+                    <i class="fa-solid fa-gamepad"></i>
                     <span>SeeRPG</span>
                 </button>
-                <button onclick="switchMode('seemta')" id="tab-seemta" class="px-5 py-2 text-xs font-medium rounded-xl transition-all duration-300 flex items-center space-x-2 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">
-                    <i class="fa-solid fa-car text-[11px]"></i>
+                <button onclick="switchMode('seemta')" id="tab-seemta" class="px-4 py-1.5 text-xs font-medium rounded-lg transition-all duration-300 flex items-center space-x-2 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
+                    <i class="fa-solid fa-car"></i>
                     <span>SeeMTA V4</span>
                 </button>
             </div>
 
-            <div class="hidden sm:flex items-center space-x-4">
-                <span class="px-3 py-1 text-xs font-semibold bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-full border border-gray-300 dark:border-gray-700 transition-colors">
-                    Verzió: 2.6
+            <div class="flex items-center space-x-3">
+                <span class="hidden sm:inline-block px-2.5 py-1 text-[10px] uppercase tracking-wider font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-md">
+                    Verzió 2.6
                 </span>
-                <button onclick="toggleTheme()" class="p-2 text-gray-500 dark:text-gray-400 hover:text-seerpg-500 dark:hover:text-seerpg-400 transition-colors rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-seerpg-500">
+                <button onclick="toggleTheme()" class="w-8 h-8 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-seerpg-500 dark:hover:text-seerpg-400 transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
                     <i id="themeIcon" class="fa-solid fa-sun"></i>
                 </button>
             </div>
@@ -107,189 +112,187 @@
 
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         
-        <div id="infoAlert" class="bg-seerpg-100 dark:bg-seerpg-950/20 border border-seerpg-300 dark:border-seerpg-800/40 rounded-xl p-4 flex items-start space-x-3 transition-colors duration-300">
-            <i class="fa-solid fa-circle-info text-seerpg-500 dark:text-seerpg-400 mt-1 text-lg" id="infoIcon"></i>
-            <div>
-                <h3 class="text-sm font-semibold text-seerpg-700 dark:text-seerpg-300" id="infoTitle">Bővített Statisztika Aktív!</h3>
-                <p class="text-xs text-seerpg-600/80 dark:text-gray-400 mt-1" id="infoText">
+        <div id="infoAlert" class="bg-seerpg-50 dark:bg-seerpg-500/10 border border-seerpg-200 dark:border-seerpg-500/20 rounded-2xl p-4 flex items-start space-x-3 transition-colors duration-300">
+            <div class="p-2 bg-seerpg-100 dark:bg-seerpg-500/20 rounded-lg text-seerpg-600 dark:text-seerpg-400 shrink-0">
+                <i class="fa-solid fa-bolt"></i>
+            </div>
+            <div class="mt-1">
+                <h3 class="text-sm font-semibold text-seerpg-800 dark:text-seerpg-300" id="infoTitle">Bővített Statisztika Aktív!</h3>
+                <p class="text-xs text-seerpg-700/80 dark:text-seerpg-200/70 mt-1 leading-relaxed" id="infoText">
                     Mostantól az elemző az AFK és report időkön felül számolja a szankciókat (Jail, Kick, Ban), a névváltásokat, valamint a kibővített admin parancsokat (getcar, unflip) is.
                 </p>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 xl:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
             
-            <div class="xl:col-span-2 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 flex flex-col space-y-4 shadow-xl transition-colors duration-300">
+            <div class="xl:col-span-5 bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-3xl p-6 flex flex-col space-y-5 shadow-sm transition-colors duration-300">
                 
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-2">
-                            <i class="fa-solid fa-file-import text-seerpg-500" id="importIcon"></i>
-                            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Fájlok feltöltése</h2>
-                        </div>
-                        <div class="flex space-x-2">
-                            <button onclick="clearInput()" class="text-xs bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1.5 rounded-lg transition flex items-center space-x-1">
-                                <i class="fa-solid fa-trash-can"></i>
-                                <span>Törlés / Reset</span>
-                            </button>
-                        </div>
-                    </div>
+                <div class="flex items-center justify-between">
+                    <h2 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-file-import text-slate-400"></i>
+                        <span>Fájlok feltöltése</span>
+                    </h2>
+                    <button onclick="clearInput()" class="text-xs text-slate-500 hover:text-red-500 dark:text-slate-400 dark:hover:text-red-400 transition-colors flex items-center space-x-1 font-medium">
+                        <i class="fa-solid fa-trash-can"></i>
+                        <span>Törlés</span>
+                    </button>
+                </div>
 
-                    <div id="dropZone" 
-                         onclick="triggerFileSelect()"
-                         ondragover="handleDragOver(event)" 
-                         ondragleave="handleDragLeave(event)" 
-                         ondrop="handleDrop(event)"
-                         class="border-2 border-dashed border-gray-300 dark:border-gray-800 hover:border-seerpg-500/50 hover:bg-seerpg-50 dark:hover:bg-seerpg-500/[0.02] bg-gray-50 dark:bg-gray-900/30 rounded-xl p-6 text-center cursor-pointer transition flex flex-col items-center justify-center space-y-3 group">
-                        <input type="file" id="fileInput" multiple accept=".log,.txt" class="hidden" onchange="handleFileSelect(event)">
-                        <div id="uploadIconContainer" class="p-3 bg-gray-200 dark:bg-gray-800/80 rounded-full group-hover:scale-110 group-hover:bg-seerpg-100 dark:group-hover:bg-seerpg-950/40 group-hover:text-seerpg-500 transition text-gray-500 dark:text-gray-400">
-                            <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
-                        </div>
-                        <div>
-                            <span class="text-sm text-gray-700 dark:text-gray-300 font-medium block">Húzd ide a log fájlokat, vagy kattints a feltöltéshez</span>
-                            <span class="text-xs text-gray-500 mt-1 block">Támogatott formátumok: .txt, .log (akár több fájl egyszerre is)</span>
-                        </div>
+                <div id="dropZone" 
+                     onclick="triggerFileSelect()"
+                     ondragover="handleDragOver(event)" 
+                     ondragleave="handleDragLeave(event)" 
+                     ondrop="handleDrop(event)"
+                     class="border-2 border-dashed border-slate-200 dark:border-slate-700 hover:border-seerpg-500 dark:hover:border-seerpg-500 bg-slate-50/50 dark:bg-slate-800/30 rounded-2xl p-8 text-center cursor-pointer transition-all duration-300 group flex flex-col items-center justify-center space-y-3">
+                    <input type="file" id="fileInput" multiple accept=".log,.txt" class="hidden" onchange="handleFileSelect(event)">
+                    <div class="w-12 h-12 bg-white dark:bg-slate-800 shadow-sm rounded-xl flex items-center justify-center text-slate-400 group-hover:text-seerpg-500 group-hover:scale-110 transition-all duration-300">
+                        <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
                     </div>
-
-                    <div id="fileListContainer" class="hidden bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800/80 rounded-xl p-3">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">Beolvasott fájlok:</span>
-                            <span id="fileCountBadge" class="text-[10px] bg-seerpg-100 dark:bg-seerpg-500/15 text-seerpg-600 dark:text-seerpg-400 px-2 py-0.5 rounded-full font-bold">0 db</span>
-                        </div>
-                        <div id="fileList" class="space-y-1.5 max-h-24 overflow-y-auto custom-scrollbar"></div>
+                    <div>
+                        <span class="text-sm text-slate-700 dark:text-slate-300 font-medium block">Húzd ide a log fájlokat</span>
+                        <span class="text-[11px] text-slate-500 mt-1 block">Kattints a böngészéshez (.txt, .log)</span>
                     </div>
                 </div>
 
-                <div class="relative flex-1 min-h-[220px] flex flex-col space-y-2">
+                <div id="fileListContainer" class="hidden space-y-2">
                     <div class="flex items-center justify-between">
-                        <label for="logInput" class="text-xs font-semibold text-gray-500 dark:text-gray-400">Beolvasott nyers log tartalom:</label>
+                        <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Beolvasott fájlok</span>
+                        <span id="fileCountBadge" class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded-md font-bold">0</span>
                     </div>
-                    <textarea id="logInput" readonly placeholder="A feltöltött fájlok tartalma itt fog megjelenni..." 
-                        class="w-full flex-1 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 text-xs font-mono focus:ring-2 focus:ring-seerpg-500 focus:border-transparent outline-none resize-y min-h-[220px] text-gray-800 dark:text-gray-300 placeholder-gray-400 dark:placeholder-gray-600 custom-scrollbar"></textarea>
+                    <div id="fileList" class="space-y-2 max-h-32 overflow-y-auto custom-scrollbar pr-1"></div>
                 </div>
 
-                <div class="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-800/60">
-                    <div class="flex items-center space-x-3">
-                        <label class="text-xs text-gray-500 dark:text-gray-400 flex items-center space-x-2 cursor-pointer">
-                            <input type="text" id="adminName" placeholder="Pl: Krisztian" value="REFLEX" class="bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-800 rounded px-2.5 py-1.5 text-xs text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-seerpg-500 w-32 font-medium">
-                            <span>Admin neved a logban</span>
-                        </label>
+                <div class="relative flex-1 flex flex-col space-y-2 min-h-[200px]">
+                    <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Nyers Log tartalom</span>
+                    <textarea id="logInput" readonly placeholder="A log adatok itt jelennek meg..." 
+                        class="w-full flex-1 bg-slate-50 dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-xs font-mono focus:ring-2 focus:ring-seerpg-500 focus:border-transparent outline-none resize-none text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-600 custom-scrollbar"></textarea>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center gap-3 pt-2">
+                    <div class="relative flex-1">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-user-shield text-xs"></i>
+                        </div>
+                        <input type="text" id="adminName" placeholder="Admin neved" value="REFLEX" 
+                               class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl pl-9 pr-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-seerpg-500 font-medium transition-shadow">
                     </div>
-                    <button onclick="analyzeLog()" id="analyzeBtn" class="bg-gradient-to-r from-seerpg-500 to-seerpg-600 hover:from-seerpg-600 hover:to-seerpg-700 text-gray-950 text-sm font-bold px-6 py-2.5 rounded-xl transition shadow-lg shadow-seerpg-600/10 flex items-center space-x-2">
-                        <i class="fa-solid fa-calculator"></i>
-                        <span>Elemzés Futtatása</span>
+                    <button onclick="analyzeLog()" id="analyzeBtn" class="bg-seerpg-500 hover:bg-seerpg-600 text-slate-950 text-sm font-bold px-6 py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-seerpg-500/20 flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Elemzés</span>
                     </button>
                 </div>
             </div>
 
-            <div class="xl:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-xl relative overflow-hidden transition-colors duration-300">
-                    <div class="absolute -right-8 -bottom-8 text-gray-200 dark:text-gray-800/10 text-9xl pointer-events-none">
-                        <i class="fa-solid fa-clock"></i>
+            <div class="xl:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 auto-rows-min">
+                
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 shadow-sm border border-slate-200/60 dark:border-slate-800 hover:-translate-y-1 transition-transform duration-300 flex flex-col justify-between">
+                    <div class="flex justify-between items-start mb-2">
+                        <h2 class="text-sm font-medium text-slate-500 dark:text-slate-400">Aktív Duty Idő</h2>
+                        <div class="p-2 bg-slate-50 dark:bg-slate-800 text-slate-400 rounded-xl"><i class="fa-solid fa-clock"></i></div>
                     </div>
-                    <h2 class="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Aktív Adminduty Idő</h2>
-                    <div class="mt-4 flex items-baseline space-x-2">
-                        <span id="totalMinutes" class="text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">0</span>
-                        <span class="text-lg text-gray-500 dark:text-gray-400 font-medium">perc</span>
+                    <div class="flex items-baseline space-x-1.5 mb-4">
+                        <span id="totalMinutes" class="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tighter">0</span>
+                        <span class="text-sm text-slate-500 font-medium">perc</span>
                     </div>
-                    <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-gray-200 dark:border-gray-800/60">
+                    <div class="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100 dark:border-slate-800/80">
                         <div>
-                            <span class="text-xs text-gray-500 dark:text-gray-400 block">Dutyban töltött:</span>
-                            <span id="rawDutyTime" class="text-sm font-semibold text-gray-700 dark:text-gray-200">0 perc</span>
+                            <span class="text-[10px] uppercase tracking-wider text-slate-400 block mb-0.5">Összesen</span>
+                            <span id="rawDutyTime" class="text-xs font-semibold text-slate-700 dark:text-slate-300">0 perc</span>
                         </div>
                         <div>
-                            <span class="text-xs text-gray-500 dark:text-gray-400 block">AFK idő (levonva):</span>
-                            <span id="totalAfkTime" class="text-sm font-semibold text-red-500 dark:text-red-400">0 perc</span>
+                            <span class="text-[10px] uppercase tracking-wider text-slate-400 block mb-0.5">AFK levonás</span>
+                            <span id="totalAfkTime" class="text-xs font-semibold text-red-500 dark:text-red-400">0 perc</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-xl relative overflow-hidden transition-colors duration-300">
-                    <div class="absolute -right-8 -bottom-8 text-gray-200 dark:text-gray-800/10 text-9xl pointer-events-none">
-                        <i class="fa-solid fa-envelope-open-text"></i>
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 shadow-sm border border-slate-200/60 dark:border-slate-800 hover:-translate-y-1 transition-transform duration-300 flex flex-col justify-between">
+                    <div class="flex justify-between items-start mb-2">
+                        <h2 class="text-sm font-medium text-slate-500 dark:text-slate-400">Lezárt Reportok</h2>
+                        <div class="p-2 bg-seerpg-500/10 text-seerpg-500 rounded-xl transition-colors duration-300" id="reportIconBox"><i class="fa-solid fa-envelope-open-text"></i></div>
                     </div>
-                    <h2 class="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Lezárt Reportok</h2>
-                    <div class="mt-4 flex items-baseline space-x-2">
-                        <span id="totalReports" class="text-5xl font-extrabold text-seerpg-500 tracking-tight transition-colors duration-300">0</span>
-                        <span class="text-lg text-gray-500 dark:text-gray-400 font-medium">db</span>
+                    <div class="flex items-baseline space-x-1.5 mb-4">
+                        <span id="totalReports" class="text-4xl font-extrabold text-seerpg-500 tracking-tighter transition-colors duration-300">0</span>
+                        <span class="text-sm text-slate-500 font-medium">db</span>
                     </div>
-                    <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-800/60 flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
-                        <span>Átlagos report ráta:</span>
-                        <span id="reportRate" class="font-semibold text-gray-700 dark:text-gray-200 text-sm">0 db/óra</span>
-                    </div>
-                </div>
-
-                <div class="bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-xl relative overflow-hidden transition-colors duration-300">
-                    <div class="absolute -right-4 -bottom-4 text-gray-200 dark:text-gray-800/10 text-8xl pointer-events-none">
-                        <i class="fa-solid fa-gavel"></i>
-                    </div>
-                    <h2 class="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-4">Admin Tevékenységek</h2>
-                    <div class="space-y-2.5 relative z-10">
-                        <div class="flex justify-between items-center text-sm border-b border-gray-200 dark:border-gray-800/60 pb-1.5">
-                            <span class="text-gray-600 dark:text-gray-400 flex items-center space-x-2"><i class="fa-solid fa-border-all text-seerpg-500 dark:text-seerpg-400 w-4 action-icon"></i> <span>Jail kiosztva</span></span>
-                            <span id="statJail" class="font-bold text-gray-900 dark:text-white">0</span>
-                        </div>
-                        <div class="flex justify-between items-center text-sm border-b border-gray-200 dark:border-gray-800/60 pb-1.5">
-                            <span class="text-gray-600 dark:text-gray-400 flex items-center space-x-2"><i class="fa-solid fa-door-open text-orange-500 dark:text-orange-400 w-4"></i> <span>Kick kiosztva</span></span>
-                            <span id="statKick" class="font-bold text-gray-900 dark:text-white">0</span>
-                        </div>
-                        <div class="flex justify-between items-center text-sm border-b border-gray-200 dark:border-gray-800/60 pb-1.5">
-                            <span class="text-gray-600 dark:text-gray-400 flex items-center space-x-2"><i class="fa-solid fa-ban text-red-500 dark:text-red-600 w-4"></i> <span>Ban kiosztva</span></span>
-                            <span id="statBan" class="font-bold text-gray-900 dark:text-white">0</span>
-                        </div>
-                        <div class="flex justify-between items-center text-sm">
-                            <span class="text-gray-600 dark:text-gray-400 flex items-center space-x-2"><i class="fa-solid fa-id-card text-blue-500 dark:text-blue-400 w-4"></i> <span>Névváltások</span></span>
-                            <span id="statNamechange" class="font-bold text-gray-900 dark:text-white">0</span>
-                        </div>
+                    <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex justify-between items-center">
+                        <span class="text-[10px] uppercase tracking-wider text-slate-400">Átlagos Ráta</span>
+                        <span id="reportRate" class="text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 px-2 py-1 rounded-md">0 db/óra</span>
                     </div>
                 </div>
 
-                <div class="bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-xl relative overflow-hidden transition-colors duration-300">
-                    <div class="absolute -right-4 -bottom-4 text-gray-200 dark:text-gray-800/10 text-8xl pointer-events-none">
-                        <i class="fa-solid fa-terminal"></i>
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 shadow-sm border border-slate-200/60 dark:border-slate-800 hover:-translate-y-1 transition-transform duration-300">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-sm font-medium text-slate-500 dark:text-slate-400">Szankciók & Tevékenység</h2>
+                        <div class="p-2 bg-slate-50 dark:bg-slate-800 text-slate-400 rounded-xl"><i class="fa-solid fa-gavel"></i></div>
                     </div>
-                    <h2 class="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-4">Sikeres Parancsok</h2>
-                    <div class="space-y-2.5 relative z-10 custom-scrollbar overflow-y-auto max-h-[175px] pr-1">
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center group">
+                            <span class="text-sm text-slate-600 dark:text-slate-400 flex items-center space-x-2"><i class="fa-solid fa-border-all text-slate-300 dark:text-slate-600 w-4 group-hover:text-seerpg-500 transition-colors"></i> <span>Jail kiosztva</span></span>
+                            <span id="statJail" class="font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded text-xs">0</span>
+                        </div>
+                        <div class="flex justify-between items-center group">
+                            <span class="text-sm text-slate-600 dark:text-slate-400 flex items-center space-x-2"><i class="fa-solid fa-door-open text-slate-300 dark:text-slate-600 w-4 group-hover:text-orange-400 transition-colors"></i> <span>Kick kiosztva</span></span>
+                            <span id="statKick" class="font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded text-xs">0</span>
+                        </div>
+                        <div class="flex justify-between items-center group">
+                            <span class="text-sm text-slate-600 dark:text-slate-400 flex items-center space-x-2"><i class="fa-solid fa-ban text-slate-300 dark:text-slate-600 w-4 group-hover:text-red-500 transition-colors"></i> <span>Ban kiosztva</span></span>
+                            <span id="statBan" class="font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded text-xs">0</span>
+                        </div>
+                        <div class="flex justify-between items-center group">
+                            <span class="text-sm text-slate-600 dark:text-slate-400 flex items-center space-x-2"><i class="fa-solid fa-id-card text-slate-300 dark:text-slate-600 w-4 group-hover:text-blue-400 transition-colors"></i> <span>Névváltások</span></span>
+                            <span id="statNamechange" class="font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded text-xs">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 shadow-sm border border-slate-200/60 dark:border-slate-800 hover:-translate-y-1 transition-transform duration-300 flex flex-col h-[230px]">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-sm font-medium text-slate-500 dark:text-slate-400">Sikeres Parancsok</h2>
+                        <div class="p-2 bg-slate-50 dark:bg-slate-800 text-slate-400 rounded-xl"><i class="fa-solid fa-terminal"></i></div>
+                    </div>
+                    <div class="space-y-3 overflow-y-auto custom-scrollbar pr-2 flex-1">
                         
-                        <div id="seerpgFixRow" class="flex justify-between items-center text-sm border-b border-gray-200 dark:border-gray-800/60 pb-1.5">
-                            <span class="text-gray-600 dark:text-gray-400"><span class="font-mono text-[11px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-700 dark:text-gray-300">/fixveh</span></span>
-                            <span id="statFixveh" class="font-bold text-gray-900 dark:text-white">0</span>
+                        <div id="seerpgFixRow" class="flex justify-between items-center">
+                            <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/fixveh</span>
+                            <span id="statFixveh" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
                         </div>
 
-                        <div id="seemtaFixRows" style="display: none;" class="flex-col space-y-1.5 border-b border-gray-200 dark:border-gray-800/60 pb-1.5">
-                            <div class="flex justify-between items-center text-sm">
-                                <span class="text-gray-600 dark:text-gray-400"><span class="font-mono text-[11px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-700 dark:text-gray-300">/fixveh (Karosszéria)</span></span>
-                                <span id="statFixK" class="font-bold text-gray-900 dark:text-white">0</span>
+                        <div id="seemtaFixRows" style="display: none;" class="flex-col space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/fixveh (Karosszéria)</span>
+                                <span id="statFixK" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
                             </div>
-                            <div class="flex justify-between items-center text-sm">
-                                <span class="text-gray-600 dark:text-gray-400"><span class="font-mono text-[11px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-700 dark:text-gray-300">/fixveh (Futómű)</span></span>
-                                <span id="statFixF" class="font-bold text-gray-900 dark:text-white">0</span>
+                            <div class="flex justify-between items-center">
+                                <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/fixveh (Futómű)</span>
+                                <span id="statFixF" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
                             </div>
-                            <div class="flex justify-between items-center text-sm">
-                                <span class="text-gray-600 dark:text-gray-400"><span class="font-mono text-[11px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-700 dark:text-gray-300">/fixveh (Gumi)</span></span>
-                                <span id="statFixG" class="font-bold text-gray-900 dark:text-white">0</span>
+                            <div class="flex justify-between items-center">
+                                <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/fixveh (Gumi)</span>
+                                <span id="statFixG" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
                             </div>
-                            <div class="flex justify-between items-center text-sm">
-                                <span class="text-gray-600 dark:text-gray-400"><span class="font-mono text-[11px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-700 dark:text-gray-300">/fixveh (Full szerviz)</span></span>
-                                <span id="statFixFull" class="font-bold text-gray-900 dark:text-white">0</span>
+                            <div class="flex justify-between items-center">
+                                <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/fixveh (Full)</span>
+                                <span id="statFixFull" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
                             </div>
                         </div>
 
-                        <div class="flex justify-between items-center text-sm border-b border-gray-200 dark:border-gray-800/60 pb-1.5">
-                            <span class="text-gray-600 dark:text-gray-400"><span class="font-mono text-[11px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-700 dark:text-gray-300">/unflip</span></span>
-                            <span id="statUnflip" class="font-bold text-gray-900 dark:text-white">0</span>
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/unflip</span>
+                            <span id="statUnflip" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
                         </div>
-                        <div class="flex justify-between items-center text-sm border-b border-gray-200 dark:border-gray-800/60 pb-1.5">
-                            <span class="text-gray-600 dark:text-gray-400"><span class="font-mono text-[11px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-700 dark:text-gray-300">/getcar</span></span>
-                            <span id="statGetcar" class="font-bold text-gray-900 dark:text-white">0</span>
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/getcar</span>
+                            <span id="statGetcar" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
                         </div>
-                        <div class="flex justify-between items-center text-sm border-b border-gray-200 dark:border-gray-800/60 pb-1.5">
-                            <span class="text-gray-600 dark:text-gray-400"><span class="font-mono text-[11px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-700 dark:text-gray-300">/asegit | /agyogyit</span></span>
-                            <span class="font-bold text-gray-900 dark:text-white"><span id="statAsegit">0</span> <span class="text-gray-400 dark:text-gray-600 font-normal">/</span> <span id="statAgyogyit">0</span></span>
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/asegit | /agyogyit</span>
+                            <span class="font-bold text-slate-900 dark:text-white text-sm"><span id="statAsegit">0</span> <span class="text-slate-300 dark:text-slate-600 font-normal">/</span> <span id="statAgyogyit">0</span></span>
                         </div>
-                        <div class="flex justify-between items-center text-sm">
-                            <span class="text-gray-600 dark:text-gray-400"><span class="font-mono text-[11px] bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-700 dark:text-gray-300">/goto | /gethere</span></span>
-                            <span class="font-bold text-gray-900 dark:text-white"><span id="statGoto">0</span> <span class="text-gray-400 dark:text-gray-600 font-normal">/</span> <span id="statGethere">0</span></span>
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/goto | /gethere</span>
+                            <span class="font-bold text-slate-900 dark:text-white text-sm"><span id="statGoto">0</span> <span class="text-slate-300 dark:text-slate-600 font-normal">/</span> <span id="statGethere">0</span></span>
                         </div>
                     </div>
                 </div>
@@ -297,45 +300,43 @@
             </div>
         </div>
 
-        <div id="resultsSection" class="hidden space-y-6">
-            <div class="border-t border-gray-200 dark:border-gray-800 pt-6">
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center space-x-2">
-                    <i class="fa-solid fa-chart-line text-seerpg-500" id="resultIcon"></i>
-                    <span>Elemzési Részletek</span>
-                </h2>
+        <div id="resultsSection" class="hidden space-y-6 pt-4">
+            <div class="flex items-center space-x-4">
+                <div class="h-px bg-slate-200 dark:bg-slate-800 flex-1"></div>
+                <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest text-center">Elemzési Részletek</h2>
+                <div class="h-px bg-slate-200 dark:bg-slate-800 flex-1"></div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="lg:col-span-2 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-xl transition-colors duration-300">
-                    <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-4 flex items-center space-x-2">
-                        <i class="fa-solid fa-timeline text-gray-500 dark:text-gray-400"></i>
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                <div class="xl:col-span-2 bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+                    <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-6 flex items-center space-x-2">
+                        <i class="fa-solid fa-timeline text-seerpg-500" id="resultIcon"></i>
                         <span>Kronológiai Idővonal</span>
                     </h3>
-                    
-                    <div class="relative pl-6 border-l border-gray-200 dark:border-gray-800 space-y-6" id="timelineContainer"></div>
+                    <div class="relative pl-6 border-l border-slate-100 dark:border-slate-800 space-y-6" id="timelineContainer"></div>
                 </div>
 
                 <div class="space-y-6">
-                    <div class="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-xl transition-colors duration-300">
-                        <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-3 flex items-center justify-between">
-                            <span class="flex items-center space-x-2">
-                                <i class="fa-solid fa-list-check text-gray-500 dark:text-gray-400"></i>
-                                <span>Lezárt Reportok Listája</span>
-                            </span>
-                            <span id="reportCountBadge" class="bg-seerpg-100 dark:bg-seerpg-500/15 text-seerpg-600 dark:text-seerpg-400 text-xs px-2 py-0.5 rounded-full font-bold transition-colors duration-300">0 db</span>
-                        </h3>
-                        <div class="max-h-60 overflow-y-auto pr-2 custom-scrollbar space-y-1.5" id="reportsList">
-                            <p class="text-xs text-gray-500 italic text-center py-4">Nem található lezárt report.</p>
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                                <i class="fa-solid fa-list-check text-slate-400"></i>
+                                <span>Reportok</span>
+                            </h3>
+                            <span id="reportCountBadge" class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] px-2 py-0.5 rounded-md font-bold">0</span>
+                        </div>
+                        <div class="max-h-64 overflow-y-auto pr-2 custom-scrollbar space-y-2" id="reportsList">
+                            <p class="text-xs text-slate-400 text-center py-4">Nem található lezárt report.</p>
                         </div>
                     </div>
 
-                    <div class="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-xl transition-colors duration-300">
-                        <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-3 flex items-center space-x-2">
-                            <i class="fa-solid fa-door-open text-gray-500 dark:text-gray-400"></i>
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-4 flex items-center space-x-2">
+                            <i class="fa-solid fa-door-open text-slate-400"></i>
                             <span>Duty Időszakok</span>
                         </h3>
-                        <div class="space-y-2" id="sessionsList">
-                            <p class="text-xs text-gray-500 italic text-center py-4">Nincs adat.</p>
+                        <div class="space-y-3" id="sessionsList">
+                            <p class="text-xs text-slate-400 text-center py-4">Nincs adat.</p>
                         </div>
                     </div>
                 </div>
@@ -344,10 +345,10 @@
 
     </main>
 
-    <footer class="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950/40 py-6 mt-12 transition-colors duration-300">
-        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
-            <p class="text-xs text-gray-500">SeeRPG & SeeMTA V4 Admin Log Statisztika &copy; 2026. Minden jog fenntartva.</p>
-            <p class="text-[10px] text-gray-400 dark:text-gray-600">Ez az alkalmazás kizárólag egy segédeszköz az adminszolgálat megkönnyebbítésére!</p>
+    <footer class="mt-auto py-8 transition-colors duration-300 border-t border-slate-200/50 dark:border-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-[11px] font-medium text-slate-400">SeeRPG & SeeMTA V4 Admin Log Statisztika &copy; 2026. Minden jog fenntartva.</p>
+            <p class="text-[10px] text-slate-300 dark:text-slate-600 mt-1">Ez az alkalmazás kizárólag egy segédeszköz az adminszolgálat megkönnyebbítésére.</p>
         </div>
     </footer>
 
@@ -359,20 +360,20 @@
                 primaryColor: 'seerpg',
                 logo: 'https://forum.see-rpg.com/img/icon_yellow.png',
                 title: 'SeeRPG <span class="text-seerpg-500">Admin</span>',
-                alertBg: 'bg-seerpg-100 dark:bg-seerpg-950/20',
-                alertBorder: 'border-seerpg-300 dark:border-seerpg-800/40',
-                alertText: 'text-seerpg-700 dark:text-seerpg-300',
-                alertIcon: 'text-seerpg-500 dark:text-seerpg-400',
+                alertBg: 'bg-seerpg-50 dark:bg-seerpg-500/10',
+                alertBorder: 'border-seerpg-200 dark:border-seerpg-500/20',
+                alertText: 'text-seerpg-800 dark:text-seerpg-300',
+                alertIconBg: 'bg-seerpg-100 dark:bg-seerpg-500/20 text-seerpg-600 dark:text-seerpg-400',
                 infoText: 'Mostantól az elemző az AFK és report időkön felül számolja a szankciókat (Jail, Kick, Ban), a névváltásokat, valamint a kibővített admin parancsokat (getcar, unflip) is.'
             },
             seemta: {
                 primaryColor: 'seemta',
                 logo: 'https://armin.kim/images/uploads/big/db7e254fc9e5f1a4fcdd958f71569a25.png',
                 title: 'SeeMTA <span class="text-seemta-500">V4 Admin</span>',
-                alertBg: 'bg-seemta-100 dark:bg-seemta-950/20',
-                alertBorder: 'border-seemta-300 dark:border-seemta-800/40',
-                alertText: 'text-seemta-700 dark:text-seemta-300',
-                alertIcon: 'text-seemta-500 dark:text-seemta-400',
+                alertBg: 'bg-seemta-50 dark:bg-seemta-500/10',
+                alertBorder: 'border-seemta-200 dark:border-seemta-500/20',
+                alertText: 'text-seemta-800 dark:text-seemta-300',
+                alertIconBg: 'bg-seemta-100 dark:bg-seemta-500/20 text-seemta-600 dark:text-seemta-400',
                 infoText: 'SeeMTA V4 mód aktív! A rendszer kiemelten és külön-külön monitorozza a fixelés típusait (Karosszéria, Futómű, Gumi, Full fix) a statisztikákban.'
             }
         };
@@ -395,14 +396,12 @@
             const tabMta = document.getElementById('tab-seemta');
             
             if (mode === 'seerpg') {
-                tabRpg.className = "px-5 py-2 text-xs font-bold rounded-xl transition-all duration-300 flex items-center space-x-2 bg-seerpg-500 text-gray-950 shadow-sm scale-100";
-                tabMta.className = "px-5 py-2 text-xs font-medium rounded-xl transition-all duration-300 flex items-center space-x-2 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200";
-                
+                tabRpg.className = "px-4 py-1.5 text-xs font-semibold rounded-lg transition-all duration-300 flex items-center space-x-2 bg-seerpg-500 text-slate-900 shadow-sm";
+                tabMta.className = "px-4 py-1.5 text-xs font-medium rounded-lg transition-all duration-300 flex items-center space-x-2 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200";
                 replaceColorClasses('seemta', 'seerpg');
             } else {
-                tabMta.className = "px-5 py-2 text-xs font-bold rounded-xl transition-all duration-300 flex items-center space-x-2 bg-seemta-500 text-gray-950 shadow-sm scale-100";
-                tabRpg.className = "px-5 py-2 text-xs font-medium rounded-xl transition-all duration-300 flex items-center space-x-2 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200";
-                
+                tabMta.className = "px-4 py-1.5 text-xs font-semibold rounded-lg transition-all duration-300 flex items-center space-x-2 bg-seemta-500 text-slate-900 shadow-sm";
+                tabRpg.className = "px-4 py-1.5 text-xs font-medium rounded-lg transition-all duration-300 flex items-center space-x-2 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200";
                 replaceColorClasses('seerpg', 'seemta');
             }
 
@@ -410,8 +409,8 @@
             document.getElementById('mainTitle').innerHTML = theme.title;
             
             const infoAlert = document.getElementById('infoAlert');
-            infoAlert.className = `${theme.alertBg} ${theme.alertBorder} rounded-xl p-4 flex items-start space-x-3 transition-colors duration-300`;
-            document.getElementById('infoIcon').className = `fa-solid fa-circle-info ${theme.alertIcon} mt-1 text-lg`;
+            infoAlert.className = `${theme.alertBg} ${theme.alertBorder} rounded-2xl p-4 flex items-start space-x-3 transition-colors duration-300`;
+            infoAlert.children[0].className = `p-2 ${theme.alertIconBg} rounded-lg shrink-0`;
             document.getElementById('infoTitle').className = `text-sm font-semibold ${theme.alertText}`;
             document.getElementById('infoText').innerText = theme.infoText;
 
@@ -432,15 +431,13 @@
         function replaceColorClasses(oldColor, newColor) {
             const elements = document.querySelectorAll(`[class*="${oldColor}-"]`);
             elements.forEach(el => {
-                if (el.id === 'totalAfkTime' || el.classList.contains('text-red-400') || el.classList.contains('text-red-500') || el.classList.contains('text-red-600') || el.classList.contains('text-orange-400') || el.classList.contains('text-orange-500') || el.classList.contains('text-blue-400') || el.classList.contains('text-blue-500')) return;
+                if (el.id === 'totalAfkTime' || el.classList.contains('text-red-400') || el.classList.contains('text-red-500')) return;
                 
                 let classList = el.className;
                 const regex = new RegExp(`-${oldColor}-`, 'g');
                 classList = classList.replace(regex, `-${newColor}-`);
-                
                 const regexEnd = new RegExp(`-${oldColor}$`, 'g');
                 classList = classList.replace(regexEnd, `-${newColor}`);
-                
                 el.className = classList;
             });
         }
@@ -461,132 +458,89 @@
             document.getElementById('totalReports').innerText = '0';
             document.getElementById('reportRate').innerText = '0 db/óra';
             
-            document.getElementById('statFixveh').innerText = '0';
-            document.getElementById('statUnflip').innerText = '0';
-            document.getElementById('statGetcar').innerText = '0';
-            document.getElementById('statAsegit').innerText = '0';
-            document.getElementById('statAgyogyit').innerText = '0';
-            document.getElementById('statGoto').innerText = '0';
-            document.getElementById('statGethere').innerText = '0';
-            
-            document.getElementById('statJail').innerText = '0';
-            document.getElementById('statKick').innerText = '0';
-            document.getElementById('statBan').innerText = '0';
-            document.getElementById('statNamechange').innerText = '0';
-
-            document.getElementById('statFixK').innerText = '0';
-            document.getElementById('statFixF').innerText = '0';
-            document.getElementById('statFixG').innerText = '0';
-            document.getElementById('statFixFull').innerText = '0';
+            ['statFixveh','statUnflip','statGetcar','statAsegit','statAgyogyit','statGoto','statGethere',
+             'statJail','statKick','statBan','statNamechange','statFixK','statFixF','statFixG','statFixFull'].forEach(id => {
+                document.getElementById(id).innerText = '0';
+            });
         }
 
-        function triggerFileSelect() {
-            document.getElementById('fileInput').click();
-        }
+        function triggerFileSelect() { document.getElementById('fileInput').click(); }
 
         function handleDragOver(e) {
             e.preventDefault();
-            const zone = document.getElementById('dropZone');
             const color = currentMode === 'seerpg' ? 'seerpg' : 'seemta';
-            zone.classList.add(`border-${color}-500`, `bg-${color}-50`, `dark:bg-${color}-500/[0.04]`);
+            document.getElementById('dropZone').classList.add(`border-${color}-500`);
         }
 
         function handleDragLeave(e) {
             e.preventDefault();
-            const zone = document.getElementById('dropZone');
             const color = currentMode === 'seerpg' ? 'seerpg' : 'seemta';
-            zone.classList.remove(`border-${color}-500`, `bg-${color}-50`, `dark:bg-${color}-500/[0.04]`);
+            document.getElementById('dropZone').classList.remove(`border-${color}-500`);
         }
 
         function handleDrop(e) {
             e.preventDefault();
-            const zone = document.getElementById('dropZone');
             const color = currentMode === 'seerpg' ? 'seerpg' : 'seemta';
-            zone.classList.remove(`border-${color}-500`, `bg-${color}-50`, `dark:bg-${color}-500/[0.04]`);
-            
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                processFiles(files);
-            }
+            document.getElementById('dropZone').classList.remove(`border-${color}-500`);
+            if (e.dataTransfer.files.length > 0) processFiles(e.dataTransfer.files);
         }
 
         function handleFileSelect(e) {
-            const files = e.target.files;
-            if (files.length > 0) {
-                processFiles(files);
-            }
+            if (e.target.files.length > 0) processFiles(e.target.files);
         }
 
         async function processFiles(files) {
             const fileListContainer = document.getElementById('fileListContainer');
             const fileList = document.getElementById('fileList');
-            const fileCountBadge = document.getElementById('fileCountBadge');
-            
             fileListContainer.classList.remove('hidden');
             fileList.innerHTML = '';
-            fileCountBadge.innerText = files.length + ' db';
+            document.getElementById('fileCountBadge').innerText = files.length;
 
-            let combinedText = '';
-            const readPromises = [];
-
+            let readPromises = [];
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
-                const sizeInKb = (file.size / 1024).toFixed(1);
-                
                 const fileItem = document.createElement('div');
-                fileItem.className = 'flex items-center justify-between text-xs bg-gray-100 dark:bg-gray-900/80 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-800/80';
-                const colorText = currentMode === 'seerpg' ? 'text-seerpg-500' : 'text-seemta-500';
+                const accentColor = currentMode === 'seerpg' ? 'text-seerpg-500' : 'text-seemta-500';
+                fileItem.className = 'flex items-center justify-between text-xs bg-slate-50 dark:bg-slate-800/50 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700/50';
                 fileItem.innerHTML = `
                     <div class="flex items-center space-x-2 truncate">
-                        <i class="fa-solid fa-file-text ${colorText}"></i>
-                        <span class="text-gray-800 dark:text-gray-200 truncate font-medium">${file.name}</span>
+                        <i class="fa-solid fa-file-lines ${accentColor}"></i>
+                        <span class="text-slate-700 dark:text-slate-300 font-medium truncate">${file.name}</span>
                     </div>
-                    <span class="text-[10px] text-gray-500 shrink-0">${sizeInKb} KB</span>
-                `;
+                    <span class="text-[10px] text-slate-400 shrink-0">${(file.size / 1024).toFixed(1)} KB</span>`;
                 fileList.appendChild(fileItem);
 
-                const promise = new Promise((resolve, reject) => {
+                readPromises.push(new Promise((resolve, reject) => {
                     const reader = new FileReader();
-                    reader.onload = (e) => resolve(e.target.result);
-                    reader.onerror = () => reject(`Hiba a fájl beolvasása közben: ${file.name}`);
+                    reader.onload = e => resolve(e.target.result);
+                    reader.onerror = () => reject(`Hiba: ${file.name}`);
                     reader.readAsText(file);
-                });
-                readPromises.push(promise);
+                }));
             }
 
             try {
                 const results = await Promise.all(readPromises);
-                combinedText = results.join('\n');
-                document.getElementById('logInput').value = combinedText;
+                document.getElementById('logInput').value = results.join('\n');
                 analyzeLog();
-            } catch (err) {
-                alert(err);
-            }
+            } catch (err) { alert(err); }
         }
 
         function getMinutesDifference(startStr, endStr) {
             const start = new Date(startStr.replace(/-/g, '/'));
             const end = new Date(endStr.replace(/-/g, '/'));
-            const diffMs = end - start;
-            return Math.max(0, Math.floor(diffMs / 1000 / 60));
+            return Math.max(0, Math.floor((end - start) / 1000 / 60));
         }
 
         function analyzeLog() {
             const rawLog = document.getElementById('logInput').value.trim();
             const targetAdmin = document.getElementById('adminName').value.trim();
 
-            if (!rawLog) {
-                alert("Kérlek előbb tölts fel log fájlt vagy illessz be szöveget!");
+            if (!rawLog || !targetAdmin) {
+                alert("Kérlek tölts fel logot és add meg az admin neved!");
                 return;
             }
 
-            if (!targetAdmin) {
-                alert("Kérlek add meg a vizsgálni kívánt admin nevét!");
-                return;
-            }
-
-            const cleanLog = rawLog.replace(/\r/g, '');
-            const rawLines = cleanLog.split('\n');
+            const rawLines = rawLog.replace(/\r/g, '').split('\n');
             const mergedLines = [];
             let currentLine = '';
 
@@ -594,12 +548,10 @@
                 if (/^\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\]/.test(line)) {
                     if (currentLine) mergedLines.push(currentLine);
                     currentLine = line;
+                } else if (currentLine) {
+                    currentLine += ' ' + line.trim();
                 } else {
-                    if (currentLine) {
-                        currentLine += ' ' + line.trim();
-                    } else {
-                        currentLine = line;
-                    }
+                    currentLine = line;
                 }
             });
             if (currentLine) mergedLines.push(currentLine);
@@ -609,206 +561,128 @@
 
             mergedLines.forEach(line => {
                 const match = line.match(logPattern);
-                if (match) {
-                    parsedLines.push({
-                        time: match[1],
-                        text: match[2].trim(),
-                        raw: line
-                    });
-                }
+                if (match) parsedLines.push({ time: match[1], text: match[2].trim(), raw: line });
             });
 
             parsedLines.sort((a, b) => new Date(a.time.replace(/-/g, '/')) - new Date(b.time.replace(/-/g, '/')));
 
-            const events = [];
-            const reports = [];
-            const dutySessions = [];
+            const events = [], reports = [], dutySessions = [];
+            let counts = { fixveh:0, unflip:0, getcar:0, asergit:0, agyogyit:0, goto:0, gethere:0, jail:0, kick:0, ban:0, name:0, fixK:0, fixF:0, fixG:0, fixFull:0 };
             
-            let countFixveh = 0, countUnflip = 0, countGetcar = 0, countAsegit = 0, countAgyogyit = 0, countGoto = 0, countGethere = 0;
-            let fixK = 0, fixF = 0, fixG = 0, fixFull = 0;
-            let countJail = 0, countKick = 0, countBan = 0, countNamechange = 0;
-            
-            let activeDuty = null;
-            let lastAfkStart = null;
-            let lastKnownTime = null;
-            let lastKnownTimeBeforeJoin = null;
+            let activeDuty = null, lastAfkStart = null, lastKnownTime = null, lastKnownTimeBeforeJoin = null;
 
-            parsedLines.forEach(lineObj => {
-                const timestamp = lineObj.time;
-                const text = lineObj.text;
-                const line = lineObj.raw;
-
-                lastKnownTime = timestamp;
+            parsedLines.forEach(obj => {
+                const {time, text, raw} = obj;
+                lastKnownTime = time;
 
                 if (text.includes('Üdvözlünk a SeeRPG szerverén') || text.includes('Üdvözlünk a SeeMTA szerverén') || text.includes('Connected to')) {
                     if (activeDuty) {
                         const closeTime = lastKnownTimeBeforeJoin || activeDuty.start;
                         activeDuty.end = closeTime;
-                        if (lastAfkStart) {
-                            activeDuty.afkIntervals.push({ start: lastAfkStart, end: closeTime });
-                            lastAfkStart = null;
-                        }
+                        if (lastAfkStart) activeDuty.afkIntervals.push({ start: lastAfkStart, end: closeTime });
                         dutySessions.push(activeDuty);
-                        events.push({
-                            type: 'DUTY_END',
-                            time: closeTime,
-                            raw: `[${closeTime}] [Rendszer] (Szerverről való kilépés miatt automatikusan lezárva)`
-                        });
-                        activeDuty = null;
+                        events.push({ type: 'DUTY_END', time: closeTime, raw: `[${closeTime}] [Rendszer] (Szerverről való kilépés miatt automatikusan lezárva)` });
+                        activeDuty = null; lastAfkStart = null;
                     }
-                    events.push({ type: 'SERVER_JOIN', time: timestamp, raw: line });
+                    events.push({ type: 'SERVER_JOIN', time, raw });
                 }
                 else if (text.includes('adminszolgálatba lépett') && text.includes(targetAdmin)) {
                     if (!activeDuty) {
-                        activeDuty = { start: timestamp, end: null, afkIntervals: [], reports: [] };
-                        events.push({ type: 'DUTY_START', time: timestamp, raw: line });
+                        activeDuty = { start: time, end: null, afkIntervals: [], reports: [] };
+                        events.push({ type: 'DUTY_START', time, raw });
                     }
                 }
-                else if (
-                    (text.includes('kilépett az adminszolgálatból') && text.includes(targetAdmin)) || 
-                    (currentMode === 'seemta' && (
-                        text.toLowerCase().includes('quit') || 
-                        text.toLowerCase().includes('exit') || 
-                        text.toLowerCase().includes('seemta logger ended')
-                    ))
-                ) {
+                else if ((text.includes('kilépett az adminszolgálatból') && text.includes(targetAdmin)) || 
+                         (currentMode === 'seemta' && (text.toLowerCase().includes('quit') || text.toLowerCase().includes('exit') || text.toLowerCase().includes('seemta logger ended')))) {
                     if (activeDuty) {
-                        activeDuty.end = timestamp;
-                        if (lastAfkStart) {
-                            activeDuty.afkIntervals.push({ start: lastAfkStart, end: timestamp });
-                            lastAfkStart = null;
-                        }
+                        activeDuty.end = time;
+                        if (lastAfkStart) activeDuty.afkIntervals.push({ start: lastAfkStart, end: time });
                         dutySessions.push(activeDuty);
-                        activeDuty = null;
+                        activeDuty = null; lastAfkStart = null;
                     }
-                    events.push({ type: 'DUTY_END', time: timestamp, raw: line });
+                    events.push({ type: 'DUTY_END', time, raw });
                 }
                 else if (text.includes('afkolsz') && text.includes('szünetel')) {
-                    if (activeDuty && !lastAfkStart) {
-                        lastAfkStart = timestamp;
-                        events.push({ type: 'AFK_START', time: timestamp, raw: line });
-                    }
+                    if (activeDuty && !lastAfkStart) { lastAfkStart = time; events.push({ type: 'AFK_START', time, raw }); }
                 }
                 else if (text.includes('újraindult') && text.includes('nem afkolsz')) {
                     if (activeDuty && lastAfkStart) {
-                        activeDuty.afkIntervals.push({ start: lastAfkStart, end: timestamp });
-                        lastAfkStart = null;
-                        events.push({ type: 'AFK_END', time: timestamp, raw: line });
+                        activeDuty.afkIntervals.push({ start: lastAfkStart, end: time });
+                        lastAfkStart = null; events.push({ type: 'AFK_END', time, raw });
                     }
                 }
                 else if ((currentMode === 'seerpg' && text.includes('reportod lezárásra került')) || 
                          (currentMode === 'seemta' && text.includes('Sikeresen lezártad az ügyet!'))) {
-                    
-                    let reportId = 'N/A';
-                    if (currentMode === 'seerpg') {
-                        const reportMatch = text.match(/\(#(\d+)\)/);
-                        if (reportMatch) reportId = reportMatch[1];
-                    } else {
-                        const reportMatch = text.match(/\((\d+)\)/);
-                        if (reportMatch) reportId = reportMatch[1];
-                    }
-                    
-                    reports.push({ time: timestamp, id: reportId });
-                    if (activeDuty) activeDuty.reports.push({ time: timestamp, id: reportId });
-
-                    events.push({ type: 'REPORT_CLOSED', time: timestamp, reportId: reportId, raw: line });
+                    let rId = 'N/A';
+                    const m = currentMode === 'seerpg' ? text.match(/\(#(\d+)\)/) : text.match(/\((\d+)\)/);
+                    if (m) rId = m[1];
+                    reports.push({ time, id: rId });
+                    if (activeDuty) activeDuty.reports.push({ time, id: rId });
+                    events.push({ type: 'REPORT_CLOSED', time, reportId: rId, raw });
                 }
                 
                 if (currentMode === 'seemta') {
-                    if (text.includes('megjavította') && text.includes('járművét')) {
-                        const adminIdx = text.indexOf(targetAdmin);
-                        const fixIdx = text.indexOf('megjavította');
-                        if (adminIdx !== -1 && adminIdx < fixIdx) {
-                            if (text.includes('(Karosszéria)')) fixK++;
-                            else if (text.includes('(Futóműállítás)')) fixF++;
-                            else if (text.includes('(Gumik)')) fixG++;
-                            else if (text.includes('(Full szerviz)')) fixFull++;
-                            else fixFull++;
-                        }
+                    if (text.includes('megjavította') && text.includes('járművét') && text.indexOf(targetAdmin) !== -1 && text.indexOf(targetAdmin) < text.indexOf('megjavította')) {
+                        if (text.includes('(Karosszéria)')) counts.fixK++;
+                        else if (text.includes('(Futóműállítás)')) counts.fixF++;
+                        else if (text.includes('(Gumik)')) counts.fixG++;
+                        else counts.fixFull++;
                     }
-                } else {
-                    if (text.includes('Sikeresen megjavítottad')) {
-                        countFixveh++;
-                    }
-                }
+                } else if (text.includes('Sikeresen megjavítottad')) counts.fixveh++;
 
-                if (text.includes('Felfordítottad') && text.includes('járművét')) countUnflip++;
-                else if (text.includes('Magadhoz teleportáltad a járművet') || text.includes('Magadhoz teleportáltad a munkajárművet')) countGetcar++;
-                else if (text.includes('Sikeresen felsegítetted')) countAsegit++;
-                else if (text.startsWith('Meggyógyítottad') || (text.includes('meggyógyította') && text.includes(targetAdmin))) countAgyogyit++;
-                else if (text.includes('Elteleportáltál') && text.includes('játékoshoz')) countGoto++;
-                else if (text.includes('Magadhoz teleportáltad') && text.includes('játékost')) countGethere++;
+                if (text.includes('Felfordítottad') && text.includes('járművét')) counts.unflip++;
+                else if (text.includes('Magadhoz teleportáltad a járművet') || text.includes('Magadhoz teleportáltad a munkajárművet')) counts.getcar++;
+                else if (text.includes('Sikeresen felsegítetted')) counts.asergit++;
+                else if (text.startsWith('Meggyógyítottad') || (text.includes('meggyógyította') && text.includes(targetAdmin))) counts.agyogyit++;
+                else if (text.includes('Elteleportáltál') && text.includes('játékoshoz')) counts.goto++;
+                else if (text.includes('Magadhoz teleportáltad') && text.includes('játékost')) counts.gethere++;
 
                 if (text.includes(targetAdmin)) {
-                    if (text.includes('AdminJailbe tette') || text.includes('bebörtönözte')) countJail++;
-                    else if (text.includes('ki lett rúgva a szerverről') && text.includes('által')) countKick++;
-                    else if (text.includes('ki lett tiltva a szerverről') && text.includes('által')) countBan++;
-                    else if (text.includes('megváltoztatta') && text.includes('nevét:')) countNamechange++;
+                    if (text.includes('AdminJailbe tette') || text.includes('bebörtönözte')) counts.jail++;
+                    else if (text.includes('ki lett rúgva a szerverről') && text.includes('által')) counts.kick++;
+                    else if (text.includes('ki lett tiltva a szerverről') && text.includes('által')) counts.ban++;
+                    else if (text.includes('megváltoztatta') && text.includes('nevét:')) counts.name++;
                 }
-
-                lastKnownTimeBeforeJoin = timestamp;
+                lastKnownTimeBeforeJoin = time;
             });
 
             if (activeDuty && lastKnownTime) {
                 activeDuty.end = lastKnownTime;
                 if (lastAfkStart) activeDuty.afkIntervals.push({ start: lastAfkStart, end: lastKnownTime });
                 dutySessions.push(activeDuty);
-                events.push({
-                    type: 'DUTY_END',
-                    time: lastKnownTime,
-                    raw: `[${lastKnownTime}] [Rendszer] (Fájl végével automatikusan lezárva)`
-                });
+                events.push({ type: 'DUTY_END', time: lastKnownTime, raw: `[${lastKnownTime}] [Rendszer] (Fájl végével automatikusan lezárva)` });
             }
 
-            let totalDutyMinutes = 0;
-            let totalAfkMinutes = 0;
-            let rawDutyMinutes = 0;
-
-            dutySessions.forEach(session => {
-                const totalMinutes = getMinutesDifference(session.start, session.end);
-                rawDutyMinutes += totalMinutes;
-
-                let afkMinutes = 0;
-                session.afkIntervals.forEach(afk => {
-                    afkMinutes += getMinutesDifference(afk.start, afk.end);
-                });
-
-                totalAfkMinutes += afkMinutes;
-                totalDutyMinutes += Math.max(0, totalMinutes - afkMinutes);
+            let totalDuty = 0, totalAfk = 0, rawDuty = 0;
+            dutySessions.forEach(s => {
+                const t = getMinutesDifference(s.start, s.end); rawDuty += t;
+                let a = 0; s.afkIntervals.forEach(afk => a += getMinutesDifference(afk.start, afk.end));
+                totalAfk += a; totalDuty += Math.max(0, t - a);
             });
 
-            document.getElementById('totalMinutes').innerText = totalDutyMinutes;
-            document.getElementById('rawDutyTime').innerText = rawDutyMinutes + ' perc';
-            document.getElementById('totalAfkTime').innerText = totalAfkMinutes + ' perc';
+            document.getElementById('totalMinutes').innerText = totalDuty;
+            document.getElementById('rawDutyTime').innerText = rawDuty + ' perc';
+            document.getElementById('totalAfkTime').innerText = totalAfk + ' perc';
             document.getElementById('totalReports').innerText = reports.length;
-
-            if (totalDutyMinutes > 0) {
-                const hours = totalDutyMinutes / 60;
-                document.getElementById('reportRate').innerText = (reports.length / hours).toFixed(2) + ' db/óra';
-            } else {
-                document.getElementById('reportRate').innerText = '0 db/óra';
-            }
+            document.getElementById('reportRate').innerText = totalDuty > 0 ? (reports.length / (totalDuty / 60)).toFixed(2) + ' db/h' : '0 db/h';
             
-            document.getElementById('statFixveh').innerText = countFixveh;
-            document.getElementById('statUnflip').innerText = countUnflip;
-            document.getElementById('statGetcar').innerText = countGetcar;
-            document.getElementById('statAsegit').innerText = countAsegit;
-            document.getElementById('statAgyogyit').innerText = countAgyogyit;
-            document.getElementById('statGoto').innerText = countGoto;
-            document.getElementById('statGethere').innerText = countGethere;
-            
-            document.getElementById('statJail').innerText = countJail;
-            document.getElementById('statKick').innerText = countKick;
-            document.getElementById('statBan').innerText = countBan;
-            document.getElementById('statNamechange').innerText = countNamechange;
-
-            document.getElementById('statFixK').innerText = fixK;
-            document.getElementById('statFixF').innerText = fixF;
-            document.getElementById('statFixG').innerText = fixG;
-            document.getElementById('statFixFull').innerText = fixFull;
+            document.getElementById('statFixveh').innerText = counts.fixveh;
+            document.getElementById('statUnflip').innerText = counts.unflip;
+            document.getElementById('statGetcar').innerText = counts.getcar;
+            document.getElementById('statAsegit').innerText = counts.asergit;
+            document.getElementById('statAgyogyit').innerText = counts.agyogyit;
+            document.getElementById('statGoto').innerText = counts.goto;
+            document.getElementById('statGethere').innerText = counts.gethere;
+            document.getElementById('statJail').innerText = counts.jail;
+            document.getElementById('statKick').innerText = counts.kick;
+            document.getElementById('statBan').innerText = counts.ban;
+            document.getElementById('statNamechange').innerText = counts.name;
+            document.getElementById('statFixK').innerText = counts.fixK;
+            document.getElementById('statFixF').innerText = counts.fixF;
+            document.getElementById('statFixG').innerText = counts.fixG;
+            document.getElementById('statFixFull').innerText = counts.fixFull;
 
             document.getElementById('resultsSection').classList.remove('hidden');
-
             renderTimeline(events, targetAdmin);
             renderReports(reports);
             renderSessions(dutySessions);
@@ -816,153 +690,67 @@
 
         function renderTimeline(events, adminName) {
             const container = document.getElementById('timelineContainer');
-            container.innerHTML = '';
+            container.innerHTML = events.length === 0 ? '<p class="text-xs text-slate-400">Nincs esemény.</p>' : '';
+            const aC = currentMode === 'seerpg' ? 'seerpg' : 'seemta';
 
-            if (events.length === 0) {
-                container.innerHTML = '<p class="text-xs text-gray-500 italic">Nincs feldolgozható esemény.</p>';
-                return;
-            }
+            events.forEach(e => {
+                let icon = 'fa-circle', color = 'text-slate-400 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700', t = '', d = '';
+                const timeStr = e.time.substring(11, 16);
 
-            const activeColor = currentMode === 'seerpg' ? 'seerpg' : 'seemta';
-
-            events.forEach(event => {
-                let icon = 'fa-circle';
-                let colorClass = 'text-gray-400 bg-gray-100 dark:bg-gray-900 border-gray-300 dark:border-gray-800';
-                let title = '';
-                let description = '';
-
-                const formattedTime = event.time.substring(11, 16); 
-
-                switch (event.type) {
-                    case 'DUTY_START':
-                        icon = 'fa-shield-halved';
-                        colorClass = 'text-green-500 dark:text-green-400 bg-green-100 dark:bg-green-950/40 border-green-300 dark:border-green-500/30';
-                        title = 'Adminszolgálat megkezdése';
-                        description = `${adminName} szolgálatba lépett.`;
-                        break;
-                    case 'DUTY_END':
-                        icon = 'fa-power-off';
-                        colorClass = 'text-red-500 dark:text-red-400 bg-red-100 dark:bg-red-950/40 border-red-300 dark:border-red-500/30';
-                        title = 'Adminszolgálat befejezése';
-                        if (event.raw.includes('automatikusan lezárva')) {
-                            description = event.raw.split('] ')[1];
-                        } else if (event.raw.toLowerCase().includes('seemta logger ended')) {
-                            description = `Szerver log vége (SeeMTA logger ended).`;
-                        } else if (event.raw.toLowerCase().includes('quit') || event.raw.toLowerCase().includes('exit')) {
-                            description = `${adminName} lecsatlakozott a szerverről (Quit/Exit).`;
-                        } else {
-                            description = `${adminName} kilépett az adminszolgálatból.`;
-                        }
-                        break;
-                    case 'AFK_START':
-                        icon = 'fa-moon';
-                        colorClass = 'text-orange-500 dark:text-orange-400 bg-orange-100 dark:bg-orange-950/40 border-orange-300 dark:border-orange-500/30';
-                        title = 'AFK Állapot';
-                        description = 'Fizetés és játszott percek számlálása szünetel.';
-                        break;
-                    case 'AFK_END':
-                        icon = 'fa-sun';
-                        colorClass = 'text-teal-500 dark:text-teal-400 bg-teal-100 dark:bg-teal-950/40 border-teal-300 dark:border-teal-500/30';
-                        title = 'Aktív Állapot Újraindult';
-                        description = 'Játszott percek számolása folytatódik.';
-                        break;
-                    case 'SERVER_JOIN':
-                        icon = 'fa-right-to-bracket';
-                        colorClass = `text-${activeColor}-500 dark:text-${activeColor}-400 bg-${activeColor}-100 dark:bg-${activeColor}-950/40 border-${activeColor}-300 dark:border-${activeColor}-500/30`;
-                        title = 'Szerverre Csatlakozás';
-                        description = `Belépés a ${currentMode === 'seerpg' ? 'SeeRPG' : 'SeeMTA V4'} szerverére.`;
-                        break;
-                    case 'REPORT_CLOSED':
-                        icon = 'fa-check';
-                        colorClass = 'text-emerald-500 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-500/30';
-                        title = `Report Lezárva (#${event.reportId})`;
-                        description = `Egy elvállalt report sikeresen lezárásra került.`;
-                        break;
+                switch (e.type) {
+                    case 'DUTY_START': icon='fa-shield-halved'; color='text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30'; t='Duty megkezdése'; d=`${adminName} szolgálatba lépett.`; break;
+                    case 'DUTY_END': icon='fa-power-off'; color='text-rose-500 bg-rose-50 dark:bg-rose-500/10 border-rose-200 dark:border-rose-500/30'; t='Duty befejezése'; d=e.raw.includes('automatikusan') ? e.raw.split('] ')[1] : `${adminName} kilépett.`; break;
+                    case 'AFK_START': icon='fa-moon'; color='text-amber-500 bg-amber-50 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/30'; t='AFK Állapot'; d='Perc számlálás szünetel.'; break;
+                    case 'AFK_END': icon='fa-sun'; color='text-sky-500 bg-sky-50 dark:bg-sky-500/10 border-sky-200 dark:border-sky-500/30'; t='Aktív újra'; d='Perc számlálás folytatódik.'; break;
+                    case 'SERVER_JOIN': icon='fa-right-to-bracket'; color=`text-${aC}-500 bg-${aC}-50 dark:bg-${aC}-500/10 border-${aC}-200 dark:border-${aC}-500/30`; t='Csatlakozás'; d=`Belépés a szerverre.`; break;
+                    case 'REPORT_CLOSED': icon='fa-check'; color='text-indigo-500 bg-indigo-50 dark:bg-indigo-500/10 border-indigo-200 dark:border-indigo-500/30'; t=`Report (#${e.reportId})`; d=`Sikeresen lezárva.`; break;
                 }
 
-                const itemHtml = `
-                    <div class="relative flex items-start space-x-3">
-                        <div class="absolute -left-[31px] mt-0.5 flex h-4 w-4 items-center justify-center rounded-full border ${colorClass} text-[8px]">
-                            <i class="fa-solid ${icon}"></i>
+                container.innerHTML += `
+                    <div class="relative flex items-start space-x-4">
+                        <div class="absolute -left-[33px] mt-1 flex h-5 w-5 items-center justify-center rounded-full border-2 ${color} text-[8px] z-10"><i class="fa-solid ${icon}"></i></div>
+                        <div class="flex-1 bg-slate-50/50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800/60 rounded-2xl p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                            <div class="flex items-center justify-between"><span class="text-sm font-bold text-slate-800 dark:text-white">${t}</span><span class="text-xs font-mono text-slate-400">${timeStr}</span></div>
+                            <p class="text-xs text-slate-500 mt-1">${d}</p>
                         </div>
-                        <div class="flex-1 bg-gray-50 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-800/40 rounded-xl p-3 hover:border-gray-300 dark:hover:border-gray-800 transition">
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-semibold text-gray-900 dark:text-white">${title}</span>
-                                <span class="text-xs text-gray-500 font-medium">${formattedTime} (${event.time.split(' ')[0]})</span>
-                            </div>
-                            <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">${description}</p>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += itemHtml;
+                    </div>`;
             });
         }
 
         function renderReports(reports) {
-            const container = document.getElementById('reportsList');
-            document.getElementById('reportCountBadge').innerText = reports.length + ' db';
-            container.innerHTML = '';
-
-            if (reports.length === 0) {
-                container.innerHTML = '<p class="text-xs text-gray-500 italic text-center py-4">Nem található lezárt report.</p>';
-                return;
-            }
-
-            reports.forEach(rep => {
-                const row = `
-                    <div class="flex items-center justify-between p-2.5 bg-gray-50 dark:bg-gray-900/50 hover:bg-gray-100 dark:hover:bg-gray-900 border border-gray-200 dark:border-gray-800/60 rounded-xl transition">
-                        <div class="flex items-center space-x-2">
-                            <span class="text-xs text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-300 dark:border-emerald-500/20 font-mono font-bold">#${rep.id}</span>
-                            <span class="text-xs text-gray-700 dark:text-gray-300">Sikeresen lezárva</span>
+            const c = document.getElementById('reportsList');
+            document.getElementById('reportCountBadge').innerText = reports.length;
+            c.innerHTML = reports.length === 0 ? '<p class="text-xs text-slate-400 text-center py-4">Nem található lezárt report.</p>' : '';
+            reports.forEach(r => {
+                c.innerHTML += `
+                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-100 dark:border-slate-800/60">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xs text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 px-2.5 py-1 rounded-md font-mono font-bold border border-indigo-100 dark:border-indigo-500/20">#${r.id}</span>
+                            <span class="text-xs text-slate-600 dark:text-slate-400">Lezárva</span>
                         </div>
-                        <span class="text-[10px] text-gray-500">${rep.time.substring(11, 19)}</span>
-                    </div>
-                `;
-                container.innerHTML += row;
+                        <span class="text-[11px] font-mono text-slate-400">${r.time.substring(11, 16)}</span>
+                    </div>`;
             });
         }
 
         function renderSessions(sessions) {
-            const container = document.getElementById('sessionsList');
-            container.innerHTML = '';
-
-            if (sessions.length === 0) {
-                container.innerHTML = '<p class="text-xs text-gray-500 italic text-center py-4">Nincs befejezett duty időszak.</p>';
-                return;
-            }
-
-            sessions.forEach((session, idx) => {
-                const rawLength = getMinutesDifference(session.start, session.end);
-                let afkLength = 0;
-                session.afkIntervals.forEach(afk => {
-                    afkLength += getMinutesDifference(afk.start, afk.end);
-                });
-
-                const netLength = Math.max(0, rawLength - afkLength);
-
-                const item = `
-                    <div class="p-3 bg-gray-50 dark:bg-gray-900/30 border border-gray-200 dark:border-gray-800 rounded-xl space-y-2">
-                        <div class="flex items-center justify-between text-xs">
-                            <span class="font-bold text-gray-800 dark:text-gray-300">${idx + 1}. Időszak</span>
-                            <span class="text-green-600 dark:text-green-400 font-semibold">${netLength} perc nettó</span>
+            const c = document.getElementById('sessionsList');
+            c.innerHTML = sessions.length === 0 ? '<p class="text-xs text-slate-400 text-center py-4">Nincs adat.</p>' : '';
+            sessions.forEach((s, i) => {
+                let aL = 0; s.afkIntervals.forEach(a => aL += getMinutesDifference(a.start, a.end));
+                const net = Math.max(0, getMinutesDifference(s.start, s.end) - aL);
+                c.innerHTML += `
+                    <div class="p-4 bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800/60 rounded-xl space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-700 dark:text-slate-300">${i + 1}. Időszak</span>
+                            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">${net} perc</span>
                         </div>
-                        <div class="text-[11px] text-gray-600 dark:text-gray-400 space-y-0.5 font-mono">
-                            <div class="flex justify-between">
-                                <span>Kezdete:</span>
-                                <span class="text-gray-900 dark:text-gray-200">${session.start.substring(5, 16)}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Vége:</span>
-                                <span class="text-gray-900 dark:text-gray-200">${session.end.substring(5, 16)}</span>
-                            </div>
-                            <div class="flex justify-between text-red-500 dark:text-red-400">
-                                <span>AFK levonás:</span>
-                                <span>-${afkLength} perc</span>
-                            </div>
+                        <div class="text-xs text-slate-500 space-y-1.5 font-mono">
+                            <div class="flex justify-between"><span>Kezdete:</span><span class="text-slate-700 dark:text-slate-300">${s.start.substring(5, 16)}</span></div>
+                            <div class="flex justify-between"><span>Vége:</span><span class="text-slate-700 dark:text-slate-300">${s.end.substring(5, 16)}</span></div>
+                            ${aL > 0 ? `<div class="flex justify-between text-rose-500 dark:text-rose-400 pt-1 border-t border-slate-200 dark:border-slate-700"><span>AFK levonás:</span><span>-${aL} perc</span></div>` : ''}
                         </div>
-                    </div>
-                `;
-                container.innerHTML += item;
+                    </div>`;
             });
         }
     </script>

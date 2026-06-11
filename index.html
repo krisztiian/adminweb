@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SeeRPG & SeeMTA V4 Admin Log Statisztika</title>
+    <title>RPG & V4 Admin Stat</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="png" href="https://i.imgur.com/umD3UNH.png">
     <script>
@@ -17,32 +17,32 @@
                     },
                     colors: {
                         seerpg: {
-                            DEFAULT: '#f0c850',
-                            50: '#fefdf4',
-                            100: '#fdfbe3',
-                            200: '#fbf5ba',
-                            300: '#f8ee8c',
-                            400: '#f4e45c',
-                            500: '#f0c850',
-                            600: '#d1a732',
-                            700: '#a37e24',
-                            800: '#755819',
-                            900: '#523c11',
-                            950: '#302207'
+                            DEFAULT: '#F5A623',
+                            50: '#FFF8EB',
+                            100: '#FFECD1',
+                            200: '#FFD3A3',
+                            300: '#FFBA75',
+                            400: '#FFA147',
+                            500: '#F5A623',
+                            600: '#D97E04',
+                            700: '#B35D00',
+                            800: '#8A4100',
+                            900: '#632A00',
+                            950: '#3D1500'
                         },
                         seemta: {
-                            DEFAULT: '#4dd097',
-                            50: '#f2fcf7',
-                            100: '#e1f9ee',
-                            200: '#bdf1db',
-                            300: '#91e7c3',
-                            400: '#62dba7',
-                            500: '#4dd097',
-                            600: '#3aba83',
-                            700: '#2b9165',
-                            800: '#21694a',
-                            900: '#174a35',
-                            950: '#0c2b1f'
+                            DEFAULT: '#00D1B2',
+                            50: '#F0FDFB',
+                            100: '#CCFBF2',
+                            200: '#99F6E5',
+                            300: '#66EAD6',
+                            400: '#33DDC2',
+                            500: '#00D1B2',
+                            600: '#00A88F',
+                            700: '#00806C',
+                            800: '#00594B',
+                            900: '#00332B',
+                            950: '#001A16'
                         }
                     }
                 }
@@ -74,65 +74,89 @@
         .dark .custom-scrollbar::-webkit-scrollbar-thumb {
             background: rgba(71, 85, 105, 0.5);
         }
+
+        /* Glassmorphism utility */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-[#0B0F19] text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-300">
+<body class="bg-gradient-to-br from-slate-50 to-slate-200 dark:from-slate-900 dark:to-slate-950 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col transition-colors duration-300">
 
-    <header class="sticky top-0 z-50 bg-white/70 dark:bg-[#0B0F19]/70 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50 transition-colors duration-300">
+    <div id="toastNotification" class="fixed top-20 right-4 z-[100] transform transition-all duration-300 translate-x-[150%] opacity-0 flex items-center bg-white dark:bg-slate-800 border-l-4 border-rose-500 p-4 rounded-xl shadow-2xl max-w-sm">
+        <div class="p-2 bg-rose-100 dark:bg-rose-500/20 text-rose-500 rounded-lg mr-3 shrink-0">
+            <i class="fa-solid fa-circle-exclamation"></i>
+        </div>
+        <div>
+            <h4 class="text-slate-900 dark:text-white font-bold text-sm">Hiányzó adatok</h4>
+            <p class="text-slate-500 dark:text-slate-400 text-xs mt-1 leading-relaxed">Kérlek tölts fel log fájlokat és add meg az admin neved az elemzéshez!</p>
+        </div>
+    </div>
+
+    <header class="sticky top-0 z-50 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border-b border-white/20 dark:border-slate-800/50 shadow-sm transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-4">
                 <div id="headerLogoContainer" class="p-2 bg-seerpg-500/10 rounded-xl flex items-center justify-center transition-all duration-300">
                     <img id="serverLogo" src="https://forum.see-rpg.com/img/icon_yellow.png" alt="Logo" class="h-6 w-6 object-contain">
                 </div>
                 <div>
-                    <h1 class="text-base font-bold tracking-wide text-slate-900 dark:text-white" id="mainTitle">SeeRPG <span class="text-seerpg-500">Admin</span></h1>
+                    <h1 class="text-base font-extrabold tracking-wide text-slate-900 dark:text-white" id="mainTitle">SeeRPG <span class="text-seerpg-500">Admin</span></h1>
                 </div>
             </div>
 
-            <div class="flex bg-slate-100 dark:bg-slate-900/80 p-1 rounded-xl relative transition-colors duration-300">
-                <button onclick="switchMode('seerpg')" id="tab-seerpg" class="px-4 py-1.5 text-xs font-semibold rounded-lg transition-all duration-300 flex items-center space-x-2 bg-seerpg-500 text-slate-900 shadow-sm">
+            <div class="flex bg-slate-200/50 dark:bg-slate-800/80 p-1 rounded-xl relative transition-colors duration-300 shadow-inner">
+                <button onclick="switchMode('seerpg')" id="tab-seerpg" class="px-5 py-1.5 text-xs font-bold rounded-lg transition-all duration-300 flex items-center space-x-2 bg-seerpg-500 text-white shadow-md">
                     <span>SeeRPG</span>
                 </button>
-                <button onclick="switchMode('seemta')" id="tab-seemta" class="px-4 py-1.5 text-xs font-medium rounded-lg transition-all duration-300 flex items-center space-x-2 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
+                <button onclick="switchMode('seemta')" id="tab-seemta" class="px-5 py-1.5 text-xs font-semibold rounded-lg transition-all duration-300 flex items-center space-x-2 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
                     <span>SeeMTA V4</span>
                 </button>
             </div>
 
             <div class="flex items-center space-x-3">
-                <span class="hidden sm:inline-block px-2.5 py-1 text-[10px] uppercase tracking-wider font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-md">
-                    Verzió 2.6
+                <span class="hidden sm:inline-block px-3 py-1 text-[10px] uppercase tracking-wider font-bold bg-white/50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 rounded-md border border-slate-200 dark:border-slate-700">
+                    Verzió 2.7
                 </span>
-                <button onclick="toggleTheme()" class="w-8 h-8 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-seerpg-500 dark:hover:text-seerpg-400 transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                <button onclick="toggleTheme()" class="w-9 h-9 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-seerpg-500 dark:hover:text-seerpg-400 transition-colors rounded-xl bg-white/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 shadow-sm">
                     <i id="themeIcon" class="fa-solid fa-sun"></i>
                 </button>
             </div>
         </div>
     </header>
 
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         
-        <div id="infoAlert" class="bg-seerpg-50 dark:bg-seerpg-500/10 border border-seerpg-200 dark:border-seerpg-500/20 rounded-2xl p-4 flex items-start space-x-3 transition-colors duration-300">
-            <div class="p-2 bg-seerpg-100 dark:bg-seerpg-500/20 rounded-lg text-seerpg-600 dark:text-seerpg-400 shrink-0">
-                <i class="fa-solid fa-bolt"></i>
+        <div id="infoAlert" class="bg-gradient-to-r from-seerpg-50 to-white dark:from-seerpg-900/20 dark:to-slate-800/40 border border-seerpg-200/60 dark:border-seerpg-500/20 rounded-2xl p-4 flex items-start space-x-4 shadow-sm transition-colors duration-300">
+            <div class="p-2.5 bg-white dark:bg-slate-800 shadow-sm border border-seerpg-100 dark:border-seerpg-500/30 rounded-xl text-seerpg-500 shrink-0">
+                <i class="fa-solid fa-bolt text-lg"></i>
             </div>
-            <div class="mt-1">
-                <h3 class="text-sm font-semibold text-seerpg-800 dark:text-seerpg-300" id="infoTitle">Bővített Statisztika Aktív!</h3>
-                <p class="text-xs text-seerpg-700/80 dark:text-seerpg-200/70 mt-1 leading-relaxed" id="infoText">
+            <div class="mt-0.5">
+                <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200" id="infoTitle">Bővített Statisztika</h3>
+                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed max-w-3xl" id="infoText">
                     Mostantól az elemző az AFK és report időkön felül számolja a szankciókat (Jail, Kick, Ban), a névváltásokat, valamint a kibővített admin parancsokat (getcar, unflip) is.
                 </p>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
             
-            <div class="xl:col-span-5 bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-3xl p-6 flex flex-col space-y-5 shadow-sm transition-colors duration-300">
+            <div class="xl:col-span-5 glass-card border border-slate-200/60 dark:border-slate-700/50 rounded-3xl p-7 flex flex-col space-y-6 shadow-lg shadow-slate-200/50 dark:shadow-none transition-colors duration-300">
                 
                 <div class="flex items-center justify-between">
-                    <h2 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-                        <i class="fa-solid fa-file-import text-slate-400"></i>
+                    <h2 class="text-sm font-extrabold text-slate-800 dark:text-white flex items-center space-x-2">
+                        <div class="p-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-500">
+                            <i class="fa-solid fa-file-import"></i>
+                        </div>
                         <span>Fájlok feltöltése</span>
                     </h2>
-                    <button onclick="clearInput()" class="text-xs text-slate-500 hover:text-red-500 dark:text-slate-400 dark:hover:text-red-400 transition-colors flex items-center space-x-1 font-medium">
+                    <button onclick="clearInput()" class="text-xs text-slate-400 hover:text-rose-500 dark:text-slate-500 dark:hover:text-rose-400 transition-colors flex items-center space-x-1.5 font-bold bg-slate-50 dark:bg-slate-800/50 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
                         <i class="fa-solid fa-trash-can"></i>
                         <span>Törlés</span>
                     </button>
@@ -143,155 +167,149 @@
                      ondragover="handleDragOver(event)" 
                      ondragleave="handleDragLeave(event)" 
                      ondrop="handleDrop(event)"
-                     class="border-2 border-dashed border-slate-200 dark:border-slate-700 hover:border-seerpg-500 dark:hover:border-seerpg-500 bg-slate-50/50 dark:bg-slate-800/30 rounded-2xl p-8 text-center cursor-pointer transition-all duration-300 group flex flex-col items-center justify-center space-y-3">
+                     class="flex-1 min-h-[220px] border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-seerpg-500 dark:hover:border-seerpg-500 bg-slate-50/50 dark:bg-slate-800/30 rounded-2xl p-8 text-center cursor-pointer transition-all duration-300 group flex flex-col items-center justify-center space-y-4">
                     <input type="file" id="fileInput" multiple accept=".log,.txt" class="hidden" onchange="handleFileSelect(event)">
-                    <div class="w-12 h-12 bg-white dark:bg-slate-800 shadow-sm rounded-xl flex items-center justify-center text-slate-400 group-hover:text-seerpg-500 group-hover:scale-110 transition-all duration-300">
-                        <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
+                    <div class="w-16 h-16 bg-white dark:bg-slate-700 shadow-md rounded-2xl flex items-center justify-center text-slate-400 group-hover:text-white group-hover:bg-seerpg-500 group-hover:shadow-seerpg-500/30 group-hover:-translate-y-1 transition-all duration-300">
+                        <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
                     </div>
                     <div>
-                        <span class="text-sm text-slate-700 dark:text-slate-300 font-medium block">Húzd ide a log fájlokat</span>
-                        <span class="text-[11px] text-slate-500 mt-1 block">Kattints a böngészéshez (.txt, .log)</span>
+                        <span class="text-sm text-slate-700 dark:text-slate-200 font-bold block">Húzd ide a log fájlokat</span>
+                        <span class="text-xs text-slate-500 mt-1 block">Kattints a böngészéshez (.txt, .log)</span>
                     </div>
                 </div>
 
-                <div id="fileListContainer" class="hidden space-y-2">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Beolvasott fájlok</span>
-                        <span id="fileCountBadge" class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded-md font-bold">0</span>
+                <div id="fileListContainer" class="hidden space-y-3">
+                    <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-700/50">
+                        <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Beolvasott fájlok</span>
+                        <span id="fileCountBadge" class="text-[10px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded-md font-bold">0</span>
                     </div>
-                    <div id="fileList" class="space-y-2 max-h-32 overflow-y-auto custom-scrollbar pr-1"></div>
+                    <div id="fileList" class="space-y-2 max-h-40 overflow-y-auto custom-scrollbar pr-1"></div>
                 </div>
 
-                <div class="relative flex-1 flex flex-col space-y-2 min-h-[200px]">
-                    <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Nyers Log tartalom</span>
-                    <textarea id="logInput" readonly placeholder="A log adatok itt jelennek meg..." 
-                        class="w-full flex-1 bg-slate-50 dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-xs font-mono focus:ring-2 focus:ring-seerpg-500 focus:border-transparent outline-none resize-none text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-600 custom-scrollbar"></textarea>
-                </div>
-
-                <div class="flex flex-col sm:flex-row sm:items-center gap-3 pt-2">
-                    <div class="relative flex-1">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                            <i class="fa-solid fa-user-shield text-xs"></i>
+                <div class="flex flex-col gap-3 pt-2">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-user-shield text-sm"></i>
                         </div>
-                        <input type="text" id="adminName" placeholder="Admin neved" 
-                               class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl pl-9 pr-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-seerpg-500 font-medium transition-shadow">
+                        <input type="text" id="adminName" placeholder="Admin neved (pl. Taylor)" 
+                               class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-xl pl-10 pr-4 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-seerpg-500 focus:border-seerpg-500 font-medium transition-all shadow-sm">
                     </div>
-                    <button onclick="analyzeLog()" id="analyzeBtn" class="bg-seerpg-500 hover:bg-seerpg-600 text-slate-950 text-sm font-bold px-6 py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-seerpg-500/20 flex items-center justify-center space-x-2">
+                    <button onclick="analyzeLog()" id="analyzeBtn" class="w-full bg-seerpg-500 hover:bg-seerpg-600 text-white text-sm font-bold px-6 py-3.5 rounded-xl transition-all duration-300 shadow-lg shadow-seerpg-500/30 hover:shadow-seerpg-500/50 flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-wand-magic-sparkles"></i>
-                        <span>Elemzés</span>
+                        <span>Adatok Elemzése</span>
                     </button>
                 </div>
             </div>
 
-            <div class="xl:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 auto-rows-min">
+            <div class="xl:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6 auto-rows-min">
                 
-                <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 shadow-sm border border-slate-200/60 dark:border-slate-800 hover:-translate-y-1 transition-transform duration-300 flex flex-col justify-between">
+                <div class="glass-card rounded-3xl p-6 shadow-sm border border-slate-200/60 dark:border-slate-700/50 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 flex flex-col justify-between group">
                     <div class="flex justify-between items-start mb-2">
-                        <h2 class="text-sm font-medium text-slate-500 dark:text-slate-400">Aktív Duty Idő</h2>
-                        <div class="p-2 bg-slate-50 dark:bg-slate-800 text-slate-400 rounded-xl"><i class="fa-solid fa-clock"></i></div>
+                        <h2 class="text-sm font-bold text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors">Aktív Duty Idő</h2>
+                        <div class="p-2.5 bg-slate-100 dark:bg-slate-800 text-slate-400 rounded-xl"><i class="fa-solid fa-clock"></i></div>
                     </div>
-                    <div class="flex items-baseline space-x-1.5 mb-4">
-                        <span id="totalMinutes" class="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tighter">0</span>
-                        <span class="text-sm text-slate-500 font-medium">perc</span>
+                    <div class="flex items-baseline space-x-2 mb-4">
+                        <span id="totalMinutes" class="text-5xl font-black text-slate-800 dark:text-white tracking-tighter">0</span>
+                        <span class="text-sm text-slate-500 font-bold uppercase tracking-wide">perc</span>
                     </div>
-                    <div class="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100 dark:border-slate-800/80">
-                        <div>
-                            <span class="text-[10px] uppercase tracking-wider text-slate-400 block mb-0.5">Összesen</span>
-                            <span id="rawDutyTime" class="text-xs font-semibold text-slate-700 dark:text-slate-300">0 perc</span>
+                    <div class="grid grid-cols-2 gap-3 pt-4 border-t border-slate-200/60 dark:border-slate-700/50">
+                        <div class="bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg text-center">
+                            <span class="text-[10px] uppercase tracking-wider text-slate-400 font-bold block mb-1">Összesen</span>
+                            <span id="rawDutyTime" class="text-xs font-extrabold text-slate-700 dark:text-slate-300">0 perc</span>
                         </div>
-                        <div>
-                            <span class="text-[10px] uppercase tracking-wider text-slate-400 block mb-0.5">AFK levonás</span>
-                            <span id="totalAfkTime" class="text-xs font-semibold text-red-500 dark:text-red-400">0 perc</span>
+                        <div class="bg-rose-50 dark:bg-rose-500/10 p-2 rounded-lg text-center border border-rose-100 dark:border-rose-500/20">
+                            <span class="text-[10px] uppercase tracking-wider text-rose-400 font-bold block mb-1">AFK levonás</span>
+                            <span id="totalAfkTime" class="text-xs font-extrabold text-rose-600 dark:text-rose-400">0 perc</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 shadow-sm border border-slate-200/60 dark:border-slate-800 hover:-translate-y-1 transition-transform duration-300 flex flex-col justify-between">
+                <div class="glass-card rounded-3xl p-6 shadow-sm border border-slate-200/60 dark:border-slate-700/50 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 flex flex-col justify-between group">
                     <div class="flex justify-between items-start mb-2">
-                        <h2 class="text-sm font-medium text-slate-500 dark:text-slate-400">Lezárt Reportok</h2>
-                        <div class="p-2 bg-seerpg-500/10 text-seerpg-500 rounded-xl transition-colors duration-300" id="reportIconBox"><i class="fa-solid fa-envelope-open-text"></i></div>
+                        <h2 class="text-sm font-bold text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors">Lezárt Reportok</h2>
+                        <div class="p-2.5 bg-seerpg-50 dark:bg-seerpg-500/10 text-seerpg-500 rounded-xl transition-colors duration-300" id="reportIconBox"><i class="fa-solid fa-envelope-open-text"></i></div>
                     </div>
-                    <div class="flex items-baseline space-x-1.5 mb-4">
-                        <span id="totalReports" class="text-4xl font-extrabold text-seerpg-500 tracking-tighter transition-colors duration-300">0</span>
-                        <span class="text-sm text-slate-500 font-medium">db</span>
+                    <div class="flex items-baseline space-x-2 mb-4">
+                        <span id="totalReports" class="text-5xl font-black text-seerpg-500 tracking-tighter transition-colors duration-300">0</span>
+                        <span class="text-sm text-slate-500 font-bold uppercase tracking-wide">db</span>
                     </div>
-                    <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex justify-between items-center">
-                        <span class="text-[10px] uppercase tracking-wider text-slate-400">Átlagos Ráta</span>
-                        <span id="reportRate" class="text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 px-2 py-1 rounded-md">0 db/óra</span>
+                    <div class="pt-4 border-t border-slate-200/60 dark:border-slate-700/50 flex justify-between items-center">
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Átlagos Ráta</span>
+                        <span id="reportRate" class="text-xs font-extrabold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700">0 db/óra</span>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 shadow-sm border border-slate-200/60 dark:border-slate-800 hover:-translate-y-1 transition-transform duration-300">
-                    <div class="flex justify-between items-start mb-4">
-                        <h2 class="text-sm font-medium text-slate-500 dark:text-slate-400">Szankciók & Tevékenység</h2>
-                        <div class="p-2 bg-slate-50 dark:bg-slate-800 text-slate-400 rounded-xl"><i class="fa-solid fa-gavel"></i></div>
+                <div class="glass-card rounded-3xl p-6 shadow-sm border border-slate-200/60 dark:border-slate-700/50 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+                    <div class="flex justify-between items-start mb-5">
+                        <h2 class="text-sm font-bold text-slate-500 dark:text-slate-400">Szankciók & Tevékenység</h2>
+                        <div class="p-2 bg-slate-100 dark:bg-slate-800 text-slate-400 rounded-xl"><i class="fa-solid fa-gavel"></i></div>
                     </div>
                     <div class="space-y-3">
-                        <div class="flex justify-between items-center group">
-                            <span class="text-sm text-slate-600 dark:text-slate-400 flex items-center space-x-2"><i class="fa-solid fa-border-all text-slate-300 dark:text-slate-600 w-4 group-hover:text-seerpg-500 transition-colors"></i> <span>Jail kiosztva</span></span>
-                            <span id="statJail" class="font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded text-xs">0</span>
+                        <div class="flex justify-between items-center group p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                            <span class="text-sm font-medium text-slate-600 dark:text-slate-300 flex items-center space-x-3"><i class="fa-solid fa-border-all text-slate-300 dark:text-slate-500 w-4 group-hover:text-seerpg-500 transition-colors"></i> <span>Jail kiosztva</span></span>
+                            <span id="statJail" class="font-black text-slate-800 dark:text-white bg-slate-200 dark:bg-slate-700 px-2.5 py-1 rounded-md text-xs">0</span>
                         </div>
-                        <div class="flex justify-between items-center group">
-                            <span class="text-sm text-slate-600 dark:text-slate-400 flex items-center space-x-2"><i class="fa-solid fa-door-open text-slate-300 dark:text-slate-600 w-4 group-hover:text-orange-400 transition-colors"></i> <span>Kick kiosztva</span></span>
-                            <span id="statKick" class="font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded text-xs">0</span>
+                        <div class="flex justify-between items-center group p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                            <span class="text-sm font-medium text-slate-600 dark:text-slate-300 flex items-center space-x-3"><i class="fa-solid fa-door-open text-slate-300 dark:text-slate-500 w-4 group-hover:text-orange-400 transition-colors"></i> <span>Kick kiosztva</span></span>
+                            <span id="statKick" class="font-black text-slate-800 dark:text-white bg-slate-200 dark:bg-slate-700 px-2.5 py-1 rounded-md text-xs">0</span>
                         </div>
-                        <div class="flex justify-between items-center group">
-                            <span class="text-sm text-slate-600 dark:text-slate-400 flex items-center space-x-2"><i class="fa-solid fa-ban text-slate-300 dark:text-slate-600 w-4 group-hover:text-red-500 transition-colors"></i> <span>Ban kiosztva</span></span>
-                            <span id="statBan" class="font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded text-xs">0</span>
+                        <div class="flex justify-between items-center group p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                            <span class="text-sm font-medium text-slate-600 dark:text-slate-300 flex items-center space-x-3"><i class="fa-solid fa-ban text-slate-300 dark:text-slate-500 w-4 group-hover:text-rose-500 transition-colors"></i> <span>Ban kiosztva</span></span>
+                            <span id="statBan" class="font-black text-slate-800 dark:text-white bg-slate-200 dark:bg-slate-700 px-2.5 py-1 rounded-md text-xs">0</span>
                         </div>
-                        <div class="flex justify-between items-center group">
-                            <span class="text-sm text-slate-600 dark:text-slate-400 flex items-center space-x-2"><i class="fa-solid fa-id-card text-slate-300 dark:text-slate-600 w-4 group-hover:text-blue-400 transition-colors"></i> <span>Névváltások</span></span>
-                            <span id="statNamechange" class="font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded text-xs">0</span>
+                        <div class="flex justify-between items-center group p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                            <span class="text-sm font-medium text-slate-600 dark:text-slate-300 flex items-center space-x-3"><i class="fa-solid fa-id-card text-slate-300 dark:text-slate-500 w-4 group-hover:text-blue-400 transition-colors"></i> <span>Névváltások</span></span>
+                            <span id="statNamechange" class="font-black text-slate-800 dark:text-white bg-slate-200 dark:bg-slate-700 px-2.5 py-1 rounded-md text-xs">0</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 shadow-sm border border-slate-200/60 dark:border-slate-800 hover:-translate-y-1 transition-transform duration-300 flex flex-col h-[230px]">
-                    <div class="flex justify-between items-start mb-4">
-                        <h2 class="text-sm font-medium text-slate-500 dark:text-slate-400">Sikeres Parancsok</h2>
-                        <div class="p-2 bg-slate-50 dark:bg-slate-800 text-slate-400 rounded-xl"><i class="fa-solid fa-terminal"></i></div>
+                <div class="glass-card rounded-3xl p-6 shadow-sm border border-slate-200/60 dark:border-slate-700/50 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 flex flex-col h-[280px]">
+                    <div class="flex justify-between items-start mb-5">
+                        <h2 class="text-sm font-bold text-slate-500 dark:text-slate-400">Sikeres Parancsok</h2>
+                        <div class="p-2 bg-slate-100 dark:bg-slate-800 text-slate-400 rounded-xl"><i class="fa-solid fa-terminal"></i></div>
                     </div>
-                    <div class="space-y-3 overflow-y-auto custom-scrollbar pr-2 flex-1">
+                    <div class="space-y-2 overflow-y-auto custom-scrollbar pr-2 flex-1">
                         
-                        <div id="seerpgFixRow" class="flex justify-between items-center">
-                            <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/fixveh</span>
-                            <span id="statFixveh" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
+                        <div id="seerpgFixRow" class="flex justify-between items-center p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                            <span class="font-mono text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-2.5 py-1.5 rounded-md shadow-sm">/fixveh</span>
+                            <span id="statFixveh" class="font-black text-slate-800 dark:text-white text-sm">0</span>
                         </div>
 
                         <div id="seemtaFixRows" style="display: none;" class="flex-col space-y-2">
-                            <div class="flex justify-between items-center">
-                                <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/fixveh (Karosszéria)</span>
-                                <span id="statFixK" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
+                            <div class="flex justify-between items-center p-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                                <span class="font-mono text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-2.5 py-1.5 rounded-md shadow-sm">/fixveh (Karosszéria)</span>
+                                <span id="statFixK" class="font-black text-slate-800 dark:text-white text-sm">0</span>
                             </div>
-                            <div class="flex justify-between items-center">
-                                <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/fixveh (Futóműállítás)</span>
-                                <span id="statFixF" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
+                            <div class="flex justify-between items-center p-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                                <span class="font-mono text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-2.5 py-1.5 rounded-md shadow-sm">/fixveh (Futómű)</span>
+                                <span id="statFixF" class="font-black text-slate-800 dark:text-white text-sm">0</span>
                             </div>
-                            <div class="flex justify-between items-center">
-                                <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/fixveh (Gumik)</span>
-                                <span id="statFixG" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
+                            <div class="flex justify-between items-center p-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                                <span class="font-mono text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-2.5 py-1.5 rounded-md shadow-sm">/fixveh (Gumik)</span>
+                                <span id="statFixG" class="font-black text-slate-800 dark:text-white text-sm">0</span>
                             </div>
-                            <div class="flex justify-between items-center">
-                                <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/fixveh (Full)</span>
-                                <span id="statFixFull" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
+                            <div class="flex justify-between items-center p-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                                <span class="font-mono text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-2.5 py-1.5 rounded-md shadow-sm">/fixveh (Full)</span>
+                                <span id="statFixFull" class="font-black text-slate-800 dark:text-white text-sm">0</span>
                             </div>
                         </div>
 
-                        <div class="flex justify-between items-center">
-                            <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/unflip</span>
-                            <span id="statUnflip" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
+                        <div class="flex justify-between items-center p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                            <span class="font-mono text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-2.5 py-1.5 rounded-md shadow-sm">/unflip</span>
+                            <span id="statUnflip" class="font-black text-slate-800 dark:text-white text-sm">0</span>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/getcar</span>
-                            <span id="statGetcar" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
+                        <div class="flex justify-between items-center p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                            <span class="font-mono text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-2.5 py-1.5 rounded-md shadow-sm">/getcar</span>
+                            <span id="statGetcar" class="font-black text-slate-800 dark:text-white text-sm">0</span>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/asegit | /agyogyit</span>
-                            <span class="font-bold text-slate-900 dark:text-white text-sm"><span id="statAsegit">0</span> <span class="text-slate-300 dark:text-slate-600 font-normal">/</span> <span id="statAgyogyit">0</span></span>
+                        <div class="flex justify-between items-center p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                            <span class="font-mono text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-2.5 py-1.5 rounded-md shadow-sm">/asegit | /agyogyit</span>
+                            <span class="font-black text-slate-800 dark:text-white text-sm"><span id="statAsegit">0</span> <span class="text-slate-300 dark:text-slate-600 font-normal">/</span> <span id="statAgyogyit">0</span></span>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/goto | /gethere</span>
-                            <span class="font-bold text-slate-900 dark:text-white text-sm"><span id="statGoto">0</span> <span class="text-slate-300 dark:text-slate-600 font-normal">/</span> <span id="statGethere">0</span></span>
+                        <div class="flex justify-between items-center p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                            <span class="font-mono text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-2.5 py-1.5 rounded-md shadow-sm">/goto | /gethere</span>
+                            <span class="font-black text-slate-800 dark:text-white text-sm"><span id="statGoto">0</span> <span class="text-slate-300 dark:text-slate-600 font-normal">/</span> <span id="statGethere">0</span></span>
                         </div>
                     </div>
                 </div>
@@ -299,83 +317,86 @@
             </div>
         </div>
 
-        <div id="resultsSection" class="hidden space-y-6 pt-4">
-            <div class="flex items-center space-x-4">
-                <div class="h-px bg-slate-200 dark:bg-slate-800 flex-1"></div>
-                <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest text-center">Elemzési Részletek</h2>
-                <div class="h-px bg-slate-200 dark:bg-slate-800 flex-1"></div>
+        <div id="resultsSection" class="hidden space-y-8 pt-6">
+            <div class="flex items-center space-x-6">
+                <div class="h-px bg-slate-300 dark:bg-slate-700 flex-1"></div>
+                <h2 class="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest text-center px-4">Elemzési Részletek</h2>
+                <div class="h-px bg-slate-300 dark:bg-slate-700 flex-1"></div>
             </div>
 
-            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-                <div class="xl:col-span-2 bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
-                    <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-6 flex items-center space-x-2">
-                        <i class="fa-solid fa-timeline text-seerpg-500" id="resultIcon"></i>
-                        <span>Kronológiai Idővonal</span>
-                    </h3>
-                    <div class="relative pl-6 border-l border-slate-100 dark:border-slate-800 space-y-6" id="timelineContainer"></div>
-                </div>
-
-                <div class="space-y-6">
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-                                <i class="fa-solid fa-list-check text-slate-400"></i>
-                                <span>Reportok</span>
-                            </h3>
-                            <span id="reportCountBadge" class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] px-2 py-0.5 rounded-md font-bold">0</span>
-                        </div>
-                        <div class="max-h-64 overflow-y-auto pr-2 custom-scrollbar space-y-2" id="reportsList">
-                            <p class="text-xs text-slate-400 text-center py-4">Nem található lezárt report.</p>
-                        </div>
-                    </div>
-
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-4 flex items-center space-x-2">
-                            <i class="fa-solid fa-door-open text-slate-400"></i>
-                            <span>Duty Időszakok</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <div class="glass-card border border-slate-200/60 dark:border-slate-700/50 rounded-3xl p-7 shadow-sm">
+                    <div class="flex items-center justify-between mb-5">
+                        <h3 class="text-sm font-extrabold text-slate-800 dark:text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-list-check text-slate-400"></i>
+                            <span>Reportok</span>
                         </h3>
-                        <div class="space-y-3" id="sessionsList">
-                            <p class="text-xs text-slate-400 text-center py-4">Nincs adat.</p>
-                        </div>
+                        <span id="reportCountBadge" class="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-[11px] px-3 py-1 rounded-lg font-black shadow-sm">0</span>
+                    </div>
+                    <div class="max-h-72 overflow-y-auto pr-2 custom-scrollbar space-y-2.5" id="reportsList">
+                        <p class="text-sm font-medium text-slate-400 text-center py-6">Nem található lezárt report.</p>
                     </div>
                 </div>
+
+                <div class="glass-card border border-slate-200/60 dark:border-slate-700/50 rounded-3xl p-7 shadow-sm">
+                    <h3 class="text-sm font-extrabold text-slate-800 dark:text-white mb-5 flex items-center space-x-2">
+                        <i class="fa-solid fa-door-open text-slate-400"></i>
+                        <span>Duty Időszakok</span>
+                    </h3>
+                    <div class="space-y-3 max-h-72 overflow-y-auto pr-2 custom-scrollbar" id="sessionsList">
+                        <p class="text-sm font-medium text-slate-400 text-center py-6">Nincs adat.</p>
+                    </div>
+                </div>
+                
             </div>
         </div>
 
     </main>
 
-    <footer class="mt-auto py-8 transition-colors duration-300 border-t border-slate-200/50 dark:border-slate-800/50">
+    <footer class="mt-auto py-8 transition-colors duration-300 border-t border-slate-200/60 dark:border-slate-800/50 bg-white/30 dark:bg-slate-950/30 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-[11px] font-medium text-slate-400">SeeRPG & SeeMTA V4 Admin Log Statisztika &copy; 2026. Minden jog fenntartva.</p>
-            <p class="text-[10px] text-slate-300 dark:text-slate-600 mt-1">Ez az alkalmazás kizárólag egy segédeszköz az adminszolgálat megkönnyebbítésére. A szerver vezetőségétől függetlenül készült weboldal!</p>
+            <p class="text-xs font-bold text-slate-500 dark:text-slate-400">SeeRPG & SeeMTA V4 Admin Log Statisztika &copy; 2026. Minden jog fenntartva.</p>
+            <p class="text-[11px] text-slate-400 dark:text-slate-500 mt-2 font-medium">Ez az alkalmazás kizárólag egy segédeszköz az adminszolgálat megkönnyebbítésére. A szerver vezetőségétől függetlenül készült weboldal!</p>
         </div>
     </footer>
 
     <script>
         let currentMode = 'seerpg';
+        let toastTimeout;
+        let rawLogData = ""; // Itt tároljuk a beolvasott logokat a törölt textarea helyett
 
         const themes = {
             seerpg: {
                 primaryColor: 'seerpg',
                 logo: 'https://forum.see-rpg.com/img/icon_yellow.png',
                 title: 'SeeRPG <span class="text-seerpg-500">Admin</span>',
-                alertBg: 'bg-seerpg-50 dark:bg-seerpg-500/10',
-                alertBorder: 'border-seerpg-200 dark:border-seerpg-500/20',
-                alertText: 'text-seerpg-800 dark:text-seerpg-300',
-                alertIconBg: 'bg-seerpg-100 dark:bg-seerpg-500/20 text-seerpg-600 dark:text-seerpg-400',
+                alertBg: 'bg-gradient-to-r from-seerpg-50 to-white dark:from-seerpg-900/20 dark:to-slate-800/40',
+                alertBorder: 'border-seerpg-200/60 dark:border-seerpg-500/20',
+                alertText: 'text-slate-800 dark:text-slate-200',
+                alertIconBg: 'bg-white dark:bg-slate-800 text-seerpg-500 border-seerpg-100 dark:border-seerpg-500/30',
                 infoText: 'Mostantól az elemző az AFK és report időkön felül számolja a szankciókat (Jail, Kick, Ban), a névváltásokat, valamint a kibővített admin parancsokat (getcar, unflip) is.'
             },
             seemta: {
                 primaryColor: 'seemta',
                 logo: 'https://armin.kim/images/uploads/big/db7e254fc9e5f1a4fcdd958f71569a25.png',
                 title: 'SeeMTA <span class="text-seemta-500">V4 Admin</span>',
-                alertBg: 'bg-seemta-50 dark:bg-seemta-500/10',
-                alertBorder: 'border-seemta-200 dark:border-seemta-500/20',
-                alertText: 'text-seemta-800 dark:text-seemta-300',
-                alertIconBg: 'bg-seemta-100 dark:bg-seemta-500/20 text-seemta-600 dark:text-seemta-400',
+                alertBg: 'bg-gradient-to-r from-seemta-50 to-white dark:from-seemta-900/20 dark:to-slate-800/40',
+                alertBorder: 'border-seemta-200/60 dark:border-seemta-500/20',
+                alertText: 'text-slate-800 dark:text-slate-200',
+                alertIconBg: 'bg-white dark:bg-slate-800 text-seemta-500 border-seemta-100 dark:border-seemta-500/30',
                 infoText: 'SeeMTA V4 mód aktív! A rendszer kiemelten és külön-külön monitorozza a fixelés típusait (Karosszéria, Futómű, Gumi, Full fix) a statisztikákban.'
             }
         };
+
+        function showToast() {
+            const toast = document.getElementById('toastNotification');
+            toast.classList.remove('translate-x-[150%]', 'opacity-0');
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('translate-x-[150%]', 'opacity-0');
+            }, 4000);
+        }
 
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
@@ -395,12 +416,12 @@
             const tabMta = document.getElementById('tab-seemta');
             
             if (mode === 'seerpg') {
-                tabRpg.className = "px-4 py-1.5 text-xs font-semibold rounded-lg transition-all duration-300 flex items-center space-x-2 bg-seerpg-500 text-slate-900 shadow-sm";
-                tabMta.className = "px-4 py-1.5 text-xs font-medium rounded-lg transition-all duration-300 flex items-center space-x-2 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200";
+                tabRpg.className = "px-5 py-1.5 text-xs font-bold rounded-lg transition-all duration-300 flex items-center space-x-2 bg-seerpg-500 text-white shadow-md";
+                tabMta.className = "px-5 py-1.5 text-xs font-semibold rounded-lg transition-all duration-300 flex items-center space-x-2 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200";
                 replaceColorClasses('seemta', 'seerpg');
             } else {
-                tabMta.className = "px-4 py-1.5 text-xs font-semibold rounded-lg transition-all duration-300 flex items-center space-x-2 bg-seemta-500 text-slate-900 shadow-sm";
-                tabRpg.className = "px-4 py-1.5 text-xs font-medium rounded-lg transition-all duration-300 flex items-center space-x-2 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200";
+                tabMta.className = "px-5 py-1.5 text-xs font-bold rounded-lg transition-all duration-300 flex items-center space-x-2 bg-seemta-500 text-white shadow-md";
+                tabRpg.className = "px-5 py-1.5 text-xs font-semibold rounded-lg transition-all duration-300 flex items-center space-x-2 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200";
                 replaceColorClasses('seerpg', 'seemta');
             }
 
@@ -408,9 +429,9 @@
             document.getElementById('mainTitle').innerHTML = theme.title;
             
             const infoAlert = document.getElementById('infoAlert');
-            infoAlert.className = `${theme.alertBg} ${theme.alertBorder} rounded-2xl p-4 flex items-start space-x-3 transition-colors duration-300`;
-            infoAlert.children[0].className = `p-2 ${theme.alertIconBg} rounded-lg shrink-0`;
-            document.getElementById('infoTitle').className = `text-sm font-semibold ${theme.alertText}`;
+            infoAlert.className = `${theme.alertBg} border ${theme.alertBorder} rounded-2xl p-4 flex items-start space-x-4 shadow-sm transition-colors duration-300`;
+            infoAlert.children[0].className = `p-2.5 shadow-sm border ${theme.alertIconBg} rounded-xl shrink-0`;
+            document.getElementById('infoTitle').className = `text-sm font-bold ${theme.alertText}`;
             document.getElementById('infoText').innerText = theme.infoText;
 
             const seerpgFixRow = document.getElementById('seerpgFixRow');
@@ -430,7 +451,7 @@
         function replaceColorClasses(oldColor, newColor) {
             const elements = document.querySelectorAll(`[class*="${oldColor}-"]`);
             elements.forEach(el => {
-                if (el.id === 'totalAfkTime' || el.classList.contains('text-red-400') || el.classList.contains('text-red-500')) return;
+                if (el.id === 'totalAfkTime' || el.classList.contains('text-rose-400') || el.classList.contains('text-rose-600')) return;
                 
                 let classList = el.className;
                 const regex = new RegExp(`-${oldColor}-`, 'g');
@@ -442,7 +463,7 @@
         }
 
         function clearInput() {
-            document.getElementById('logInput').value = '';
+            rawLogData = ""; // Változó törlése textarea helyett
             document.getElementById('fileInput').value = '';
             document.getElementById('fileListContainer').classList.add('hidden');
             document.getElementById('fileList').innerHTML = '';
@@ -469,18 +490,21 @@
             e.preventDefault();
             const color = currentMode === 'seerpg' ? 'seerpg' : 'seemta';
             document.getElementById('dropZone').classList.add(`border-${color}-500`);
+            document.getElementById('dropZone').classList.add(`bg-${color}-50/50`);
         }
 
         function handleDragLeave(e) {
             e.preventDefault();
             const color = currentMode === 'seerpg' ? 'seerpg' : 'seemta';
             document.getElementById('dropZone').classList.remove(`border-${color}-500`);
+            document.getElementById('dropZone').classList.remove(`bg-${color}-50/50`);
         }
 
         function handleDrop(e) {
             e.preventDefault();
             const color = currentMode === 'seerpg' ? 'seerpg' : 'seemta';
             document.getElementById('dropZone').classList.remove(`border-${color}-500`);
+            document.getElementById('dropZone').classList.remove(`bg-${color}-50/50`);
             if (e.dataTransfer.files.length > 0) processFiles(e.dataTransfer.files);
         }
 
@@ -500,13 +524,13 @@
                 const file = files[i];
                 const fileItem = document.createElement('div');
                 const accentColor = currentMode === 'seerpg' ? 'text-seerpg-500' : 'text-seemta-500';
-                fileItem.className = 'flex items-center justify-between text-xs bg-slate-50 dark:bg-slate-800/50 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700/50';
+                fileItem.className = 'flex items-center justify-between text-xs bg-white dark:bg-slate-800/80 px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm';
                 fileItem.innerHTML = `
-                    <div class="flex items-center space-x-2 truncate">
-                        <i class="fa-solid fa-file-lines ${accentColor}"></i>
-                        <span class="text-slate-700 dark:text-slate-300 font-medium truncate">${file.name}</span>
+                    <div class="flex items-center space-x-3 truncate">
+                        <i class="fa-solid fa-file-lines ${accentColor} text-sm"></i>
+                        <span class="text-slate-700 dark:text-slate-200 font-bold truncate">${file.name}</span>
                     </div>
-                    <span class="text-[10px] text-slate-400 shrink-0">${(file.size / 1024).toFixed(1)} KB</span>`;
+                    <span class="text-[11px] font-mono font-medium text-slate-400 bg-slate-100 dark:bg-slate-900 px-2 py-1 rounded-md shrink-0">${(file.size / 1024).toFixed(1)} KB</span>`;
                 fileList.appendChild(fileItem);
 
                 readPromises.push(new Promise((resolve, reject) => {
@@ -519,7 +543,7 @@
 
             try {
                 const results = await Promise.all(readPromises);
-                document.getElementById('logInput').value = results.join('\n');
+                rawLogData = results.join('\n'); // Memóriában tároljuk
                 analyzeLog();
             } catch (err) { alert(err); }
         }
@@ -530,12 +554,19 @@
             return Math.max(0, Math.floor((end - start) / 1000 / 60));
         }
 
+        function formatTime(minutes) {
+            if (minutes < 60) return `${minutes} perc`;
+            const h = Math.floor(minutes / 60);
+            const m = minutes % 60;
+            return m > 0 ? `${h} óra ${m} perc` : `${h} óra`;
+        }
+
         function analyzeLog() {
-            const rawLog = document.getElementById('logInput').value.trim();
+            const rawLog = rawLogData.trim(); // Változóból olvassuk
             const targetAdmin = document.getElementById('adminName').value.trim();
 
             if (!rawLog || !targetAdmin) {
-                alert("Kérlek tölts fel logot és add meg az admin neved!");
+                showToast();
                 return;
             }
 
@@ -565,7 +596,7 @@
 
             parsedLines.sort((a, b) => new Date(a.time.replace(/-/g, '/')) - new Date(b.time.replace(/-/g, '/')));
 
-            const events = [], reports = [], dutySessions = [];
+            const reports = [], dutySessions = [];
             let counts = { fixveh:0, unflip:0, getcar:0, asergit:0, agyogyit:0, goto:0, gethere:0, jail:0, kick:0, ban:0, name:0, fixK:0, fixF:0, fixG:0, fixFull:0 };
             
             let activeDuty = null, lastAfkStart = null, lastKnownTime = null, lastKnownTimeBeforeJoin = null;
@@ -574,51 +605,51 @@
                 const {time, text, raw} = obj;
                 lastKnownTime = time;
 
-                // Kibővített feltétel SeeMTA logger indításra és szervercsatlakozásra
-                if (text.includes('Üdvözlünk a SeeRPG szerverén') || 
-                    text.includes('Üdvözlünk a SeeMTA szerverén') || 
-                    text.includes('Connected to') || 
-                    (currentMode === 'seemta' && text.includes('SeeMTA logger started'))) {
+                if ((currentMode === 'seerpg' && (text.includes('Üdvözlünk a SeeRPG szerverén') || text.includes('Connected to'))) ||
+                    (currentMode === 'seemta' && (text.includes('Üdvözlünk a SeeMTA szerverén') || text.includes('SeeMTA logger started')))) {
                     
                     if (activeDuty) {
-                        // Ha aktív a duty, lezárjuk az előzőleg olvasott utolsó log sor időpontjával
                         const closeTime = lastKnownTimeBeforeJoin || activeDuty.start;
                         activeDuty.end = closeTime;
                         if (lastAfkStart) activeDuty.afkIntervals.push({ start: lastAfkStart, end: closeTime });
                         dutySessions.push(activeDuty);
-                        
-                        const autoCloseReason = text.includes('SeeMTA logger started') 
-                            ? '(Kijelentkezési log hiánya / Újraindítás miatt automatikusan lezárva)' 
-                            : '(Szerverről való kilépés miatt automatikusan lezárva)';
-                            
-                        events.push({ type: 'DUTY_END', time: closeTime, raw: `[${closeTime}] [Rendszer] ${autoCloseReason}` });
                         activeDuty = null; lastAfkStart = null;
                     }
-                    events.push({ type: 'SERVER_JOIN', time, raw });
                 }
-                else if (text.includes('adminszolgálatba lépett') && text.includes(targetAdmin)) {
+                else if (
+                    (currentMode === 'seemta' && text.includes(`[SeeMTA - AdminDuty]: ${targetAdmin} adminszolgálatba lépett.`)) ||
+                    (currentMode === 'seerpg' && text.includes('adminszolgálatba lépett') && text.includes(targetAdmin))
+                ) {
                     if (!activeDuty) {
                         activeDuty = { start: time, end: null, afkIntervals: [], reports: [] };
-                        events.push({ type: 'DUTY_START', time, raw });
                     }
                 }
-                else if ((text.includes('kilépett az adminszolgálatból') && text.includes(targetAdmin)) || 
-                         (currentMode === 'seemta' && (text.toLowerCase().includes('quit') || text.toLowerCase().includes('exit') || text.toLowerCase().includes('seemta logger ended')))) {
+                else if (
+                    (currentMode === 'seemta' && (
+                        text.includes(`[SeeMTA - AdminDuty]: ${targetAdmin} kilépett az adminszolgálatból.`) ||
+                        text.includes("[Input]  : quit") ||
+                        text.includes("[Input]  : reconnect") ||
+                        text.includes("[Input]  : exit") ||
+                        text.includes("[Input]  : disconnect") ||
+                        text.includes(`[SeeMTA - Kick]: ${targetAdmin}`) ||
+                        text.includes("SeeMTA logger ended")
+                    )) ||
+                    (currentMode === 'seerpg' && text.includes('kilépett az adminszolgálatból') && text.includes(targetAdmin))
+                ) {
                     if (activeDuty) {
                         activeDuty.end = time;
                         if (lastAfkStart) activeDuty.afkIntervals.push({ start: lastAfkStart, end: time });
                         dutySessions.push(activeDuty);
                         activeDuty = null; lastAfkStart = null;
                     }
-                    events.push({ type: 'DUTY_END', time, raw });
                 }
                 else if (text.includes('afkolsz') && text.includes('szünetel')) {
-                    if (activeDuty && !lastAfkStart) { lastAfkStart = time; events.push({ type: 'AFK_START', time, raw }); }
+                    if (activeDuty && !lastAfkStart) { lastAfkStart = time; }
                 }
                 else if (text.includes('újraindult') && text.includes('nem afkolsz')) {
                     if (activeDuty && lastAfkStart) {
                         activeDuty.afkIntervals.push({ start: lastAfkStart, end: time });
-                        lastAfkStart = null; events.push({ type: 'AFK_END', time, raw });
+                        lastAfkStart = null; 
                     }
                 }
                 else if ((currentMode === 'seerpg' && text.includes('reportod lezárásra került')) || 
@@ -628,7 +659,6 @@
                     if (m) rId = m[1];
                     reports.push({ time, id: rId });
                     if (activeDuty) activeDuty.reports.push({ time, id: rId });
-                    events.push({ type: 'REPORT_CLOSED', time, reportId: rId, raw });
                 }
                 
                 if (currentMode === 'seemta') {
@@ -660,7 +690,6 @@
                 activeDuty.end = lastKnownTime;
                 if (lastAfkStart) activeDuty.afkIntervals.push({ start: lastAfkStart, end: lastKnownTime });
                 dutySessions.push(activeDuty);
-                events.push({ type: 'DUTY_END', time: lastKnownTime, raw: `[${lastKnownTime}] [Rendszer] (Fájl végével automatikusan lezárva)` });
             }
 
             let totalDuty = 0, totalAfk = 0, rawDuty = 0;
@@ -693,72 +722,46 @@
             document.getElementById('statFixFull').innerText = counts.fixFull;
 
             document.getElementById('resultsSection').classList.remove('hidden');
-            renderTimeline(events, targetAdmin);
             renderReports(reports);
             renderSessions(dutySessions);
-        }
-
-        function renderTimeline(events, adminName) {
-            const container = document.getElementById('timelineContainer');
-            container.innerHTML = events.length === 0 ? '<p class="text-xs text-slate-400">Nincs esemény.</p>' : '';
-            const aC = currentMode === 'seerpg' ? 'seerpg' : 'seemta';
-
-            events.forEach(e => {
-                let icon = 'fa-circle', color = 'text-slate-400 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700', t = '', d = '';
-                const timeStr = e.time.substring(11, 16);
-
-                switch (e.type) {
-                    case 'DUTY_START': icon='fa-shield-halved'; color='text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30'; t='Duty megkezdése'; d=`${adminName} szolgálatba lépett.`; break;
-                    case 'DUTY_END': icon='fa-power-off'; color='text-rose-500 bg-rose-50 dark:bg-rose-500/10 border-rose-200 dark:border-rose-500/30'; t='Duty befejezése'; d=e.raw.includes('automatikusan') ? e.raw.split('] ')[1] : `${adminName} kilépett.`; break;
-                    case 'AFK_START': icon='fa-moon'; color='text-amber-500 bg-amber-50 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/30'; t='AFK Állapot'; d='Perc számlálás szünetel.'; break;
-                    case 'AFK_END': icon='fa-sun'; color='text-sky-500 bg-sky-50 dark:bg-sky-500/10 border-sky-200 dark:border-sky-500/30'; t='Aktív újra'; d='Perc számlálás folytatódik.'; break;
-                    case 'SERVER_JOIN': icon='fa-right-to-bracket'; color=`text-${aC}-500 bg-${aC}-50 dark:bg-${aC}-500/10 border-${aC}-200 dark:border-${aC}-500/30`; t='Csatlakozás'; d=`Belépés a szerverre.`; break;
-                    case 'REPORT_CLOSED': icon='fa-check'; color='text-indigo-500 bg-indigo-50 dark:bg-indigo-500/10 border-indigo-200 dark:border-indigo-500/30'; t=`Report (#${e.reportId})`; d=`Sikeresen lezárva.`; break;
-                }
-
-                container.innerHTML += `
-                    <div class="relative flex items-start space-x-4">
-                        <div class="absolute -left-[33px] mt-1 flex h-5 w-5 items-center justify-center rounded-full border-2 ${color} text-[8px] z-10"><i class="fa-solid ${icon}"></i></div>
-                        <div class="flex-1 bg-slate-50/50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-800/60 rounded-2xl p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
-                            <div class="flex items-center justify-between"><span class="text-sm font-bold text-slate-800 dark:text-white">${t}</span><span class="text-xs font-mono text-slate-400">${timeStr}</span></div>
-                            <p class="text-xs text-slate-500 mt-1">${d}</p>
-                        </div>
-                    </div>`;
-            });
         }
 
         function renderReports(reports) {
             const c = document.getElementById('reportsList');
             document.getElementById('reportCountBadge').innerText = reports.length;
-            c.innerHTML = reports.length === 0 ? '<p class="text-xs text-slate-400 text-center py-4">Nem található lezárt report.</p>' : '';
+            c.innerHTML = reports.length === 0 ? '<p class="text-sm font-medium text-slate-400 text-center py-6">Nem található lezárt report.</p>' : '';
             reports.forEach(r => {
                 c.innerHTML += `
-                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-100 dark:border-slate-800/60">
+                    <div class="flex items-center justify-between p-3.5 bg-white dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex items-center space-x-3">
-                            <span class="text-xs text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 px-2.5 py-1 rounded-md font-mono font-bold border border-indigo-100 dark:border-indigo-500/20">#${r.id}</span>
-                            <span class="text-xs text-slate-600 dark:text-slate-400">Lezárva</span>
+                            <span class="text-xs text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 px-3 py-1.5 rounded-lg font-mono font-black border border-indigo-100 dark:border-indigo-500/20">#${r.id}</span>
+                            <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Lezárva</span>
                         </div>
-                        <span class="text-[11px] font-mono text-slate-400">${r.time.substring(11, 16)}</span>
+                        <span class="text-xs font-mono font-medium text-slate-400 bg-slate-100 dark:bg-slate-900 px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800">${r.time.substring(11, 16)}</span>
                     </div>`;
             });
         }
 
         function renderSessions(sessions) {
             const c = document.getElementById('sessionsList');
-            c.innerHTML = sessions.length === 0 ? '<p class="text-xs text-slate-400 text-center py-4">Nincs adat.</p>' : '';
+            c.innerHTML = sessions.length === 0 ? '<p class="text-sm font-medium text-slate-400 text-center py-6">Nincs adat.</p>' : '';
             sessions.forEach((s, i) => {
                 let aL = 0; s.afkIntervals.forEach(a => aL += getMinutesDifference(a.start, a.end));
                 const net = Math.max(0, getMinutesDifference(s.start, s.end) - aL);
+                
+                const timeString = formatTime(net);
+                const afkString = formatTime(aL);
+
                 c.innerHTML += `
-                    <div class="p-4 bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800/60 rounded-xl space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-bold text-slate-700 dark:text-slate-300">${i + 1}. Időszak</span>
-                            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-md">${net} perc</span>
+                    <div class="p-5 bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl space-y-4 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-700/50">
+                            <span class="text-sm font-extrabold text-slate-800 dark:text-slate-200">${i + 1}. Időszak</span>
+                            <span class="text-xs font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 px-3 py-1 rounded-lg">${timeString}</span>
                         </div>
-                        <div class="text-xs text-slate-500 space-y-1.5 font-mono">
-                            <div class="flex justify-between"><span>Kezdete:</span><span class="text-slate-700 dark:text-slate-300">${s.start.substring(5, 16)}</span></div>
-                            <div class="flex justify-between"><span>Vége:</span><span class="text-slate-700 dark:text-slate-300">${s.end.substring(5, 16)}</span></div>
-                            ${aL > 0 ? `<div class="flex justify-between text-rose-500 dark:text-rose-400 pt-1 border-t border-slate-200 dark:border-slate-700"><span>AFK levonás:</span><span>-${aL} perc</span></div>` : ''}
+                        <div class="text-xs text-slate-500 font-mono space-y-2.5 font-medium">
+                            <div class="flex justify-between items-center"><span class="flex items-center space-x-2"><i class="fa-solid fa-play text-slate-300 dark:text-slate-600 text-[10px]"></i> <span>Kezdete:</span></span><span class="text-slate-700 dark:text-slate-300 font-bold bg-slate-50 dark:bg-slate-900 px-2 py-0.5 rounded border border-slate-100 dark:border-slate-800">${s.start.substring(5, 16)}</span></div>
+                            <div class="flex justify-between items-center"><span class="flex items-center space-x-2"><i class="fa-solid fa-stop text-slate-300 dark:text-slate-600 text-[10px]"></i> <span>Vége:</span></span><span class="text-slate-700 dark:text-slate-300 font-bold bg-slate-50 dark:bg-slate-900 px-2 py-0.5 rounded border border-slate-100 dark:border-slate-800">${s.end.substring(5, 16)}</span></div>
+                            ${aL > 0 ? `<div class="flex justify-between items-center text-rose-500 dark:text-rose-400 pt-2 border-t border-slate-100 dark:border-slate-700/50"><span class="font-bold">AFK levonás:</span><span class="font-bold">-${afkString}</span></div>` : ''}
                         </div>
                     </div>`;
             });

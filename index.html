@@ -264,11 +264,11 @@
                                 <span id="statFixK" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/fixveh (Futómű)</span>
+                                <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/fixveh (Futóműállítás)</span>
                                 <span id="statFixF" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/fixveh (Gumi)</span>
+                                <span class="font-mono text-[11px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 px-2 py-1 rounded">/fixveh (Gumik)</span>
                                 <span id="statFixG" class="font-bold text-slate-900 dark:text-white text-sm">0</span>
                             </div>
                             <div class="flex justify-between items-center">
@@ -574,13 +574,24 @@
                 const {time, text, raw} = obj;
                 lastKnownTime = time;
 
-                if (text.includes('Üdvözlünk a SeeRPG szerverén') || text.includes('Üdvözlünk a SeeMTA szerverén') || text.includes('Connected to')) {
+                // Kibővített feltétel SeeMTA logger indításra és szervercsatlakozásra
+                if (text.includes('Üdvözlünk a SeeRPG szerverén') || 
+                    text.includes('Üdvözlünk a SeeMTA szerverén') || 
+                    text.includes('Connected to') || 
+                    (currentMode === 'seemta' && text.includes('SeeMTA logger started'))) {
+                    
                     if (activeDuty) {
+                        // Ha aktív a duty, lezárjuk az előzőleg olvasott utolsó log sor időpontjával
                         const closeTime = lastKnownTimeBeforeJoin || activeDuty.start;
                         activeDuty.end = closeTime;
                         if (lastAfkStart) activeDuty.afkIntervals.push({ start: lastAfkStart, end: closeTime });
                         dutySessions.push(activeDuty);
-                        events.push({ type: 'DUTY_END', time: closeTime, raw: `[${closeTime}] [Rendszer] (Szerverről való kilépés miatt automatikusan lezárva)` });
+                        
+                        const autoCloseReason = text.includes('SeeMTA logger started') 
+                            ? '(Kijelentkezési log hiánya / Újraindítás miatt automatikusan lezárva)' 
+                            : '(Szerverről való kilépés miatt automatikusan lezárva)';
+                            
+                        events.push({ type: 'DUTY_END', time: closeTime, raw: `[${closeTime}] [Rendszer] ${autoCloseReason}` });
                         activeDuty = null; lastAfkStart = null;
                     }
                     events.push({ type: 'SERVER_JOIN', time, raw });
